@@ -13,9 +13,30 @@ import { loadComponent, AuthRoute } from 'UTILS/utils'
 
 
 export default class RouterConfig extends React.Component{
+	componentWillMount() {
+		console.log('will mount')
+	}
 	componentDidMount() {
 		// preload
 		// User(() => {})
+		console.log('did mount')
+		User()
+	}
+	componentWillUpdate(nextProps, nextState) {
+		console.log('will Update')
+	}
+	componentDidUpdate(prevProps, prevState) {
+		console.log('did Update')
+	}
+	componentWillUnmount() {
+	    console.log('did WillUnmount')
+	}
+	componentWillReceiveProps(nextProps) {
+		console.log('WillReceiveProps')
+	}
+	
+	shouldComponentUpdate(nextProps, nextState) {
+	  	console.log('shouldComponentUpdate')
 	}
 	render() {
 		return (

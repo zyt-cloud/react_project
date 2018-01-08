@@ -6,12 +6,12 @@ const htmlWebpackPlugin = require('html-webpack-plugin');
 // const copyWebpackPlugin = require('copy-webpack-plugin');
 
 const fs = require('fs');
-console.log(9, fs)
+// console.log(9, fs)
 
 module.exports = {
 	// entry: path.join(__dirname, 'src/index.js'),
 	entry: {
-		app: ['classlist-polyfill', 'babel-polyfill', path.join(__dirname, 'src/index.js')]/*,
+		app: [/*'classlist-polyfill',*/ 'babel-polyfill', path.join(__dirname, 'src/index.js')]/*,
 		vendor: ['react', 'react-router-dom', 'redux', 'react-dom', 'react-redux']*/
 	},
 	output: {

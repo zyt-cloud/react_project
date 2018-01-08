@@ -10,7 +10,7 @@ import ReactDom from 'react-dom';
 
 // import {Hello} from './components/hello/hello'
 import RouterConfig from './router/router'
-import {Provider} from 'react-redux';
+import { Provider } from 'react-redux';
 
 import store from './redux/store';
 
