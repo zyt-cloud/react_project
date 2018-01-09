@@ -8,7 +8,6 @@ test('使用babel');*/
 import React from 'react';
 import ReactDom from 'react-dom';
 
-// import {Hello} from './components/hello/hello'
 import RouterConfig from './router/router'
 import { Provider } from 'react-redux';
 

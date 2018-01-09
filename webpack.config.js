@@ -4,17 +4,17 @@ const webpack = require('webpack');
 
 
 const UglifyJsPlugin = require('uglifyjs-webpack-plugin');
-const ExtractTextPlugin = require('extract-text-webpack-plugin');
+/*const ExtractTextPlugin = require('extract-text-webpack-plugin');
 
 const extractLess = new ExtractTextPlugin("assets/css/less.[contenthash:6].css");
 const extractCss = new ExtractTextPlugin("assets/css/css.[contenthash:6].css");
-
+*/
 const commonConfig = require('./webpack.common.js');
 const webpackMerge = require('webpack-merge');
 
 const prodsConfg = {
 
-	module: {
+	/*module: {
 		rules: [{
 			test: /\.css$/,
 			// use: ['style-loader', 'css-loader']
@@ -46,7 +46,7 @@ const prodsConfg = {
 				]
 			})
 		}]
-	},
+	},*/
 	/*resolve: {
 		alias: {
 			pages: path.join(__dirname, 'src/pages')
@@ -78,8 +78,8 @@ const prodsConfg = {
 			}
 		}),
 
-		extractLess,
-		extractCss,
+		/*extractLess,
+		extractCss,*/
 
 		/*new ExtractTextPlugin({
 			filename: '[name].[contenthash:6].css',

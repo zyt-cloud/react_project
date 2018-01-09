@@ -1,6 +1,29 @@
 import React from 'React';
-import { Route } from 'react-router-dom'
+import { connect } from 'react-redux';
+import { Route, Redirect } from 'react-router-dom'
 import Bundle from '../router/bundle';
+
+import { addTab } from 'REDUX/actions/index'
+
+let refreshCallback = null;
+
+export const setRefresh = (refresh) => {
+  if(typeof refresh !== 'function'){
+    throw new error('参数错误');
+  }
+  refreshCallback = refresh;
+}
+
+export const triggerRefresh = () => {
+  if(typeof refreshCallback !== 'function'){
+    return;
+  }
+  refreshCallback();
+}
+
+export const removeRefresh = () => {
+  refreshCallback = null;
+}
 
 const Loading = () => (
 	<div>loading....</div>
@@ -14,27 +37,40 @@ export const loadComponent = (component) => route => (
     </Bundle>
 )
 
-export const AuthRoute = (props) => {
-
-	const {component: Component, path, ...rest} = props;
-	return (
-		
-		<Route {...rest} render={(props) => (
-			<Component {...props} />
-		)} />
-	)
-	
-}
 
 
+class PrivateRoute extends React.Component {
+  componentDidMount() {
+    this.addTab(this.props);
+  }
 
-/*class PrivateRouteContainer extends React.Component {
-  render() {
+  componentWillReceiveProps(nextProps) {
+    this.addTab(nextProps);
+  }
+
+
+  addTab(props){
+    if(props.component.name !== 'App'){
+
+      props.dispatch(addTab({
+        key: props.location.key,
+        isActive: true,
+        name: props.name,
+        path: props.path,
+        url: props.location.pathname
+      }, Math.max(document.body.scrollTop, document.documentElement.scrollTop)))
+    }
+  }
+
+
+  render(){
     const {
-      isAuthenticated,
+      isAuthenticated = true,
       component: Component,
+      dispatch,
       ...props
-    } = this.props
+    } = this.props;
+
 
     return (
       <Route
@@ -54,6 +90,6 @@ export const AuthRoute = (props) => {
   }
 }
 
-const PrivateRoute = connect(state => ({
-  isAuthenticated: state.authReducer.isAuthenticated
-}))(PrivateRouteContainer)*/
+export const AuthRoute = connect(state => ({
+  isAuthenticated: state.app.auth.isAuthenticated
+}))(PrivateRoute)

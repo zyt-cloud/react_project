@@ -7,4 +7,12 @@ import reducers from './reducers';
 
 // const middlewares = [ promiseMiddleware ];
 
-export default createStore(combineReducers({...reducers}), applyMiddleware(promiseMiddleware));
+const initState = {
+	app: {
+		auth: {
+			isAuthenticated: true
+		}
+	}
+}
+
+export default createStore(combineReducers({...reducers}), initState, applyMiddleware(promiseMiddleware));

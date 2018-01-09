@@ -13,14 +13,14 @@ import { loadComponent, AuthRoute } from 'UTILS/utils'
 
 
 export default class RouterConfig extends React.Component{
-	componentWillMount() {
+
+	/*componentWillMount() {
 		console.log('will mount')
 	}
 	componentDidMount() {
 		// preload
 		// User(() => {})
-		console.log('did mount')
-		User()
+		// User()
 	}
 	componentWillUpdate(nextProps, nextState) {
 		console.log('will Update')
@@ -37,7 +37,7 @@ export default class RouterConfig extends React.Component{
 	
 	shouldComponentUpdate(nextProps, nextState) {
 	  	console.log('shouldComponentUpdate')
-	}
+	}*/
 	render() {
 		return (
 			<Router>
@@ -45,7 +45,7 @@ export default class RouterConfig extends React.Component{
 					<Switch>
 						<AuthRoute exact path="/" component={App} />
 						<Route path="/login" component={loadComponent(Login)}/>
-						<Route path="/index" component={App}/>
+						<AuthRoute path="/index" component={App}/>
 						<Route render={() => (<div>404 NOT FOUND</div>)}/>
 					</Switch>
 					

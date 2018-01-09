@@ -15,6 +15,9 @@ const mapStateToProps = ({ state }) => ({
 });
 
 class Login extends Component {
+    componentDidMount() {
+        console.log(this)
+    }
     render() {
         
 

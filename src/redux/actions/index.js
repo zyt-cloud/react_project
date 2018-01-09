@@ -9,6 +9,25 @@ export const USER_REQUEST_FAIL = 'user_request_fail';
 
 export const TOGGLE_THEME = 'toggle_theme';
 
+export const ADD_TAB = 'add_tab';
+export const CLOSE_TAB = 'close_tab';
+// export const REFRESH_TAB = 'refresh_tab';
+
+
+export const addTab = (tab, scrollTop) => {
+	return {
+		type: ADD_TAB,
+		tab,
+		scrollTop
+	}
+}
+export const closeTab = (path) => {
+	return {
+		type: CLOSE_TAB,
+		path
+	}
+}
+
 export const toggleTheme = () => {
 	return {
 		type: TOGGLE_THEME
@@ -41,7 +60,7 @@ const getRequest = () => {
 const getSuccess = (list) => {
 	return {
 		type: USER_REQUEST_SUCC,
-		list: list
+		list
 	}
 }
 const getFail = () => {

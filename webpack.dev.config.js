@@ -11,7 +11,7 @@ const devConfig = {
 		filename: '[name].[hash].js'
 	},
 
-	module: {
+	/*module: {
 		rules: [{
 			test: /\.css$/,
 			use: ['style-loader', 'css-loader', 'postcss-loader']
@@ -19,7 +19,7 @@ const devConfig = {
 			test: /\.less$/,
 			use: ['style-loader', 'css-loader', 'postcss-loader', 'less-loader']
 		}]
-	},
+	},*/
 	/*resolve: {
 		alias: {
 			pages: path.join(__dirname, 'src/pages')

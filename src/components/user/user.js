@@ -4,6 +4,8 @@ import ReactDOM from 'react-dom';
 import {connect} from 'react-redux';
 import { getUser } from 'REDUX/actions/index'
 
+import { setRefresh, removeRefresh } from 'UTILS/utils';
+
 const Item = (props) => (
 	<li className="a">{props.item.goods_name}</li>
 ) 
@@ -23,15 +25,24 @@ const Test = (props) => {
 }
 class User extends Component{
 
-	
 	componentDidMount(){
-		console.log('user', this)
-		
-		const {getUser} = this.props;
 
+		const { user, getUser } = this.props;
+
+		setRefresh(() => {
+			getUser();
+		});
+
+		if(user.list && user.list.length > 0){
+			return;
+		}
 		getUser();
 	}
 
+	componentWillUnmount() {
+		removeRefresh();
+	}
+	
 	test = (e) => {
 		console.log(this)
 		console.log(e.target.getAttribute('data-name'))

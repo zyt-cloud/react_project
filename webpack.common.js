@@ -5,8 +5,30 @@ const webpack = require('webpack');
 const htmlWebpackPlugin = require('html-webpack-plugin');
 // const copyWebpackPlugin = require('copy-webpack-plugin');
 
+const ExtractTextPlugin = require('extract-text-webpack-plugin');
+const extractLess = new ExtractTextPlugin("assets/css/less.[contenthash:6].css");
+const extractCss = new ExtractTextPlugin("assets/css/css.[contenthash:6].css");
+
+
 const fs = require('fs');
-// console.log(9, fs)
+
+const pkgPath = path.join(__dirname, 'package.json');
+const pkg = fs.existsSync(pkgPath) ? require(pkgPath) : {};
+
+let theme = {};
+if (pkg.theme && typeof(pkg.theme) === 'string') {
+    let cfgPath = pkg.theme;
+    // relative path
+    if (cfgPath.charAt(0) === '.') {
+      cfgPath = path.resolve(__dirname, cfgPath);
+	}
+    const getThemeConfig = require(cfgPath);
+    theme = getThemeConfig();
+} else if (pkg.theme && typeof(pkg.theme) === 'object') {
+    theme = pkg.theme;
+}
+
+
 
 module.exports = {
 	// entry: path.join(__dirname, 'src/index.js'),
@@ -23,6 +45,36 @@ module.exports = {
 
 	module: {
 		rules: [{
+			test: /\.css$/,
+			// use: ['style-loader', 'css-loader']
+			use: extractCss.extract({
+				fallback: 'style-loader',
+				use: [{
+					loader: 'css-loader',
+					options: {
+						minimize: true //css压缩
+					}
+					
+				}, 'postcss-loader'
+				]
+			}),
+			//include: [path.join(__dirname, 'src/pages/user')]
+		},{
+			test: /\.less$/i,
+			// use: ['style-loader', 'css-loader']
+			use: extractLess.extract({
+				fallback: 'style-loader',
+				use: [
+					{
+						loader: 'css-loader',
+						options: {
+							minimize: true //css压缩
+						}
+						
+					}, 'postcss-loader', /*'less-loader'*/`less-loader?{"modifyVars":${JSON.stringify(theme)}}`
+				]
+			})
+		},{
 			test: /\.js$/,
 			use: ['babel-loader?cacheDirectory=true'],
 			include: [path.join(__dirname, 'src')]
@@ -89,6 +141,9 @@ module.exports = {
 			name: 'manifest',
   			chunks: ['vendor']
 		}),
+
+		extractLess,
+		extractCss,
 
 		/*new copyWebpackPlugin([{
 			from: 'src/assets', to: 'assets'
