@@ -1,7 +1,9 @@
 import React, {Component} from 'react';
 
 // import Table from 'element-react/dist/npm/es5/src/table';
-import { Menu, Table, Input, Divider, Popconfirm, Dropdown, Icon, message, Button } from 'antd';
+import { Menu, Input, Divider, Popconfirm, Dropdown, Icon, message, Button } from 'antd';
+
+import DHBTable from '../common/table';
 
 // import 'element-theme-default'
 
@@ -26,27 +28,7 @@ const menu = (
     </Menu.Item>
   </Menu>
 );
-class MyTable extends Component{
-	test = (e) => {
-		console.log(this.table);
-		const {columns} = this.props;
 
-		if(columns[0].width === '40%'){
-			columns[0].width = '30%'
-		}
-		else{
-			columns[0].width = '40%';
-		}
-
-		console.log(this.table.getElementsByClassName('ant-table'))
-		
-
-		this.setState({columns})
-	}
-	render(){
-		return <div ref={(table) => {this.table = table}} onClick={this.test}><Table {...this.props} /></div>
-	}
-}
 
 class EditableCell extends React.Component {
   state = {
@@ -209,7 +191,7 @@ export default class Home extends Component{
 		        </a>
 		    </Dropdown>
 		    <div><Icon type="link" /></div>
-		    <MyTable bordered dataSource={dataSource} size="middle" columns={columns} />
+		    <DHBTable bordered dataSource={dataSource} size="middle" columns={columns} />
 	    </div>
 	 )
 	}

@@ -9,7 +9,8 @@ import App from '../app';
 
 import { loadComponent, AuthRoute } from 'UTILS/utils'
 
-
+import { LocaleProvider } from 'antd';
+import zhCN from 'antd/lib/locale-provider/zh_CN';
 
 
 export default class RouterConfig extends React.Component{
@@ -41,15 +42,16 @@ export default class RouterConfig extends React.Component{
 	render() {
 		return (
 			<Router>
-				<div>
-					<Switch>
-						<AuthRoute exact path="/" component={App} />
-						<Route path="/login" component={loadComponent(Login)}/>
-						<AuthRoute path="/index" component={App}/>
-						<Route render={() => (<div>404 NOT FOUND</div>)}/>
-					</Switch>
-					
-				</div>
+				<LocaleProvider locale={zhCN}>
+					<div>
+						<Switch>
+							<AuthRoute exact path="/" component={App} />
+							<Route path="/login" component={loadComponent(Login)}/>
+							<AuthRoute path="/index" component={App}/>
+							<Route render={() => (<div>404 NOT FOUND</div>)}/>
+						</Switch>
+					</div>
+				</LocaleProvider>
 			</Router>
 		);
 	}
