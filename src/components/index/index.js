@@ -6,28 +6,27 @@ import Header from 'PAGES/common/header';
 import Navbar from 'PAGES/common/navbar';
 
 
-import { toggleTheme, closeTab  } from 'REDUX/actions/index';
+import { closeTab  } from 'REDUX/actions/index';
 
 
 const mapDispatchToProps = {
-    toggleTheme,
     closeTab 
 };
 
 const mapStateToProps = ({ app, ...props }) => ({
-	theme: app.theme,
+	globalData: app.globalData,
     tabs: app.tabs
 });
 
 export class Index extends Component {
 
     render() {
-        const { toggleTheme, theme, tabs, ...props } = this.props;
+        const { globalData, closeTab, toggleAffix, menus, ...props } = this.props;
 
         return (
             <div>
-            	<Header toggleTheme={toggleTheme} tabs={tabs} {...props} />
-            	<Navbar mode={theme.mode} theme={theme.theme} />
+            	<Header closeTab={closeTab} {...props} />
+            	<Navbar toggleAffix={toggleAffix} menus={menus} mode={globalData.mode} theme={globalData.theme} {...props} />
             </div>
         );
     }

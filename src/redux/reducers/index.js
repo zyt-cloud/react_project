@@ -1,11 +1,12 @@
 
-import {combineReducers} from 'redux';
+import { combineReducers } from 'redux';
 
 import * as types from '../actions/index';
 
-const initThemeStage = {
+const initGlobalStage = {
 	mode: 'vertical',
-    theme: 'light'
+    theme: 'light',
+    preVersionUrl: process.env.NODE_ENV === 'production' ? '' : 'http://pc.newdhb.com'
 }
 const initCountState = {
 	count: 0
@@ -14,10 +15,10 @@ const initCountState = {
 const initAuth = {
 	isAuthenticated: true
 }
-const initTabs = [];
+const initTabs = [{isActive: true,name: "",path: "/Manager/home",url: "/",scrollTop: 0}];
 
 
-const theme = (state = initThemeStage, action) => {
+const globalData = (state = initGlobalStage, action) => {
 	switch(action.type){
 		case types.TOGGLE_THEME:
 
@@ -26,10 +27,13 @@ const theme = (state = initThemeStage, action) => {
 				theme: state.theme === 'light' ? 'dark' : 'light'
 			}
 
+
 		default:
 			return state
 	}
 }
+
+
 const counter = (state = initCountState, action) => {
 	switch(action.type){
 		case types.INCREMENT:
@@ -65,6 +69,7 @@ const addTab = (tabs, tab, scrollTop) => {
 	let index = tabs.findIndex(item => item.path === tab.path);
 
 	tabs.find(item => {
+		
 		if(item.isActive){
 			item.isActive = false;
 			item.scrollTop = scrollTop;
@@ -86,19 +91,42 @@ const addTab = (tabs, tab, scrollTop) => {
  * @param  {[type]}   key  [description]
  * @return {[type]}        [description]
  */
-const closeTab = (tabs, path) => {
-	return tabs.filter((item) => item.path !== path);
+const closeTab = (tabs, tab, history) => {
+	console.log(tabs, tab)
+	let _index = 0;
+	const _tabs = tabs.filter((item, index) => {
+		if(item.path !== tab.path){
+			return true
+		}
+		_index = index;
+		return false;
+	});
+	
+	if(_index > 1){
+		history.push(tabs[_index - 1].url)
+	}
+	else if(_index === 1 && _tabs.length > 1){
+		history.push(tabs[_index + 1].url)
+	}
+	else{
+		history.push('/Manager/home');
+	}
+	console.log(_tabs)
+	return _tabs;
 }
 
 const tabs = (state = initTabs, action) => {
 	switch(action.type){
 		case types.ADD_TAB:
+			let tabs = addTab(state, action.tab, action.scrollTop);
 
-			return addTab(state, action.tab, action.scrollTop)
+			window.localStorage.setItem('_tabs_', JSON.stringify(tabs))
+			
+			return tabs
 
 		case types.CLOSE_TAB:
 
-			return closeTab(state, action.path)
+			return closeTab(state, action.tab, action.history)
 
 		default:
 			return state
@@ -110,4 +138,4 @@ const auth = (state = initAuth, action) => {
 }
 
 
-export default combineReducers({theme, counter, auth, tabs});
+export default combineReducers({globalData, counter, auth, tabs});

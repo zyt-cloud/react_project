@@ -14,7 +14,6 @@ class Counter extends Component{
 		
 	}*/
 	componentDidMount(){
-		console.log('counter', this);
 		/*store.subscribe(() => {
 			this.setState({
 				counter: store.getState().counter

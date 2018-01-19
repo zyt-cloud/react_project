@@ -7,7 +7,6 @@ export const USER_REQUEST = 'user_request';
 export const USER_REQUEST_SUCC = 'user_request_succ';
 export const USER_REQUEST_FAIL = 'user_request_fail';
 
-export const TOGGLE_THEME = 'toggle_theme';
 
 export const ADD_TAB = 'add_tab';
 export const CLOSE_TAB = 'close_tab';
@@ -21,16 +20,11 @@ export const addTab = (tab, scrollTop) => {
 		scrollTop
 	}
 }
-export const closeTab = (path) => {
+export const closeTab = (tab, history) => {
 	return {
 		type: CLOSE_TAB,
-		path
-	}
-}
-
-export const toggleTheme = () => {
-	return {
-		type: TOGGLE_THEME
+		tab,
+		history
 	}
 }
 

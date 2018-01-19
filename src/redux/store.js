@@ -14,5 +14,9 @@ const initState = {
 		}
 	}
 }
+const _tabs_ = window.localStorage.getItem('_tabs_')
+if(_tabs_){
+	initState.app.tabs = JSON.parse(_tabs_);
+}
 
 export default createStore(combineReducers({...reducers}), initState, applyMiddleware(promiseMiddleware));

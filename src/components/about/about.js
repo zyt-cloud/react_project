@@ -10,7 +10,7 @@ export default class About extends Component{
 	render(){
 		return (
 			<div className="about">
-				<div>about component test this is about  ss</div>
+				<div>about component test this is about  ssdd</div>
 				<img src={image} alt="" />
 			</div>
 		)

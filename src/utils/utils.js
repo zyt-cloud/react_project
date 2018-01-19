@@ -44,21 +44,31 @@ class PrivateRoute extends React.Component {
     this.addTab(this.props);
   }
 
-  componentWillReceiveProps(nextProps) {
+  shouldComponentUpdate(nextProps, nextState) {
+    if(nextProps.component.name === 'App'){
+      return true
+    }
+    if(this.props.path === nextProps.path){
+      return false
+    }
+
     this.addTab(nextProps);
+    return true
   }
 
 
   addTab(props){
     if(props.component.name !== 'App'){
+      const content = document.getElementById('dhb-content');
+      const scrollTop = content ? document.getElementById('dhb-content').scrollTop : '';// Math.max(document.body.scrollTop, document.documentElement.scrollTop);
 
       props.dispatch(addTab({
-        key: props.location.key,
+        // key: props.location.key,
         isActive: true,
         name: props.name,
-        path: props.path,
+        path: props.path === '/' ? '/Manager/home' : props.path,
         url: props.location.pathname
-      }, Math.max(document.body.scrollTop, document.documentElement.scrollTop)))
+      }, scrollTop))
     }
   }
 

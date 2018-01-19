@@ -52,7 +52,7 @@ module.exports = {
 				use: [{
 					loader: 'css-loader',
 					options: {
-						minimize: true //css压缩
+						minimize: process.env.NODE_ENV === 'production' ? true : false //css压缩
 					}
 					
 				}, 'postcss-loader'
@@ -68,7 +68,7 @@ module.exports = {
 					{
 						loader: 'css-loader',
 						options: {
-							minimize: true //css压缩
+							minimize: process.env.NODE_ENV === 'production' ? true : false //css压缩
 						}
 						
 					}, 'postcss-loader', /*'less-loader'*/`less-loader?{"modifyVars":${JSON.stringify(theme)}}`
@@ -84,7 +84,8 @@ module.exports = {
 				loader: 'url-loader',
 				options: {
 					limit: 10000,
-					name: 'assets/img/[name].[hash:6].[ext]'
+					name: 'assets/img/[name].[hash:6].[ext]',
+					// publicPath: '../../'
 				}
 			}]
 		},

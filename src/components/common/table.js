@@ -4,8 +4,11 @@ import { Table } from 'antd';
 
 const _document = document;
 
+
 /**
- * 如果需要拖动表头列动态改变表格列宽度 请import 此组件
+ * @Author zyt
+ * @Date   2018-01-10
+ * [如果需要拖动表头列动态改变表格列宽度 请 import 此组件]
  */
 export default class DHBTable extends React.Component {
 
@@ -26,7 +29,11 @@ export default class DHBTable extends React.Component {
 			const tagName = target.tagName.toLowerCase();
 			const ptagName = target.parentNode.tagName.toLowerCase();
 
+			const bodyStyle = _document.body.style;
+
 			if(tagName !== 'th' && ptagName !== 'th' ){
+				bodyStyle.cursor = '';
+	        	this.draggingColumn = null;
 				return
 			}
 			if(ptagName === 'th'){
@@ -34,7 +41,7 @@ export default class DHBTable extends React.Component {
 			}
 
 	        const rect = target.getBoundingClientRect();
-	        const bodyStyle = _document.body.style;
+	        
 
 	        if (rect.width > 12 && rect.right - event.pageX < 8) {
 	            bodyStyle.cursor = 'col-resize';
@@ -114,6 +121,5 @@ export default class DHBTable extends React.Component {
 				<Table {...this.props} />
 			</div>
 		)
-		// return <Table {...this.props} />
 	}
 }

@@ -1,8 +1,8 @@
 import React from 'React';
-import {BrowserRouter/*HashRouter*/ as Router, Route, Switch } from 'react-router-dom'
+import {/*BrowserRouter*/HashRouter as Router, Route, Switch } from 'react-router-dom'
 
 
-
+// lazy load
 import Login from 'bundle-loader?lazy&name=login!PAGES/login/login';
 
 import App from '../app';
@@ -20,9 +20,7 @@ export default class RouterConfig extends React.Component{
 	}
 	componentDidMount() {
 		// preload
-		// User(() => {})
-		// User()
-	}
+		// User(() => {})	}
 	componentWillUpdate(nextProps, nextState) {
 		console.log('will Update')
 	}
@@ -47,7 +45,7 @@ export default class RouterConfig extends React.Component{
 						<Switch>
 							<AuthRoute exact path="/" component={App} />
 							<Route path="/login" component={loadComponent(Login)}/>
-							<AuthRoute path="/index" component={App}/>
+							<AuthRoute path="/Manager" component={App}/>
 							<Route render={() => (<div>404 NOT FOUND</div>)}/>
 						</Switch>
 					</div>
