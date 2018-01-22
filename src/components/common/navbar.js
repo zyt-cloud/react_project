@@ -226,7 +226,7 @@ export default class Navbar extends React.Component {
                     <li 
                       onMouseEnter={this.switchSubMenu.bind(this, index)} 
                       onMouseLeave={this.switchSubMenu.bind(this, index)} 
-                      key={index} 
+                      key={item.rule_id} 
                       className={`menu-item ${index === this.state.menuIndex ? 'active' : ''}`}>
                         <Icon className="dhbicon" type={item.iconType} />{item.name}
                     </li>
@@ -244,9 +244,9 @@ export default class Navbar extends React.Component {
                 {this.state.subs.map((item, index) => (
                     item.isTitle 
                     ?
-                    <li key={index} className="sub-menu-title">{item.name}</li>
+                    <li key={item.path} className="sub-menu-title">{item.name}</li>
                     :
-                    <li key={index}><NavLink exact={true} className="sub-item" to={item.path}>{item.name}</NavLink></li>
+                    <li key={item.path}><NavLink exact={true} className="sub-item" to={item.path}>{item.name}</NavLink></li>
                   )
                 )}  
               </ul>

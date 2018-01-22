@@ -127,10 +127,10 @@ export default class App extends Component {
             <div>
             	<Index history={history} toggleAffix={this.toggleAffix} menus={this.state.menus} />
 
-            	<div id="dhb-content" className="dhb-content" style={{left: this.state.isAffix ? '220px' : '100px'}}>
+            	<div id="dhb-content" className="dhb-content" style={{left: this.state.isAffix ? '230px' : '110px'}}>
             		<div className="dhb-bread">
             		  <Breadcrumb>
-					    <Breadcrumb.Item><NavLink to="/Manager/home">首页</NavLink></Breadcrumb.Item>
+					    <Breadcrumb.Item><NavLink to="/Manager/Home/index">首页</NavLink></Breadcrumb.Item>
 					    <Breadcrumb.Item><a href="javascript:;">订单</a></Breadcrumb.Item>
 					    <Breadcrumb.Item>订单管理</Breadcrumb.Item>
 					  </Breadcrumb>
@@ -139,13 +139,14 @@ export default class App extends Component {
   					<div className="dhb-wrap">
 						<Switch>
 							<AuthRoute name="首页" exact path="/" component={Home} />
-							<AuthRoute name="首页" path="/Manager/home" component={Home}/>
+							<AuthRoute name="首页" exact path="/Manager/home" component={Home}/>
+							<AuthRoute name="首页" path="/Manager/Home/index" component={PreVersion}/>
 			                <AuthRoute name="关于" path="/Manager/about" component={About}/>
 			                <AuthRoute name="计数" path="/Manager/counter/:name" component={Counter}/>
 			                <AuthRoute name="用户" path="/Manager/user" component={User.mod || loadComponent(User)}/>
 			                {
 			                	menuRoute.map((item, index) => (
-			                		<AuthRoute key={index} name={item.name} path={item.path} component={PreVersion}/>
+			                		<AuthRoute key={item.path} name={item.name} path={item.path} component={PreVersion}/>
 			                	))
 			                }
 						</Switch>

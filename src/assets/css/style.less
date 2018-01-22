@@ -49,6 +49,7 @@ a:link, a:visited{
     position: relative;
     min-width: 1280px;
     height: 100%;
+    font-family: 'Hiragino Sans GB',Arial,"Microsoft YaHei","Source Sans Pro","Helvetica Neue",Helvetica,sans-serif;
 }
 #pre-version{
 	position: absolute;
@@ -78,7 +79,7 @@ a:link, a:visited{
 	overflow: hidden;
 	display: inline-block;
 	position: absolute;
-	left: 220px;
+	left: 230px;
 	right: 180px;
 	vertical-align: middle;
 	white-space: nowrap;
@@ -92,6 +93,7 @@ a:link, a:visited{
 	padding: 0 16px;
 }
 .tab-item{
+	position: relative;
 	width: 112px;
 	height: 42px;
 	line-height: 42px;
@@ -99,10 +101,10 @@ a:link, a:visited{
 	padding: 0 17px;
 	border-radius: 2px 2px 0 0;
 	border: none;
-	border-top: 2px solid transparent;
 	font-size: 12px;
 	color: #424242;
-	background: linear-gradient(right top, #E1E1E1 10%, #D2D2D2 100%);
+	background: url(../img/icon.png) no-repeat -198px 0;
+	transition: background 0.01s; 
 }
 .more-tab-item{
     padding: 9px 16px;
@@ -118,17 +120,15 @@ a:link, a:visited{
 .more-tab-item > .anticon{
 	margin-top: 3px;
 }
-// .tab-item:first-child{
-// 	width: 60px;
-// 	text-align: center;
-// }
+
 .tab-item.active{
-	background: #f0f0f0;
-	border-top-color: @dhb-theme-color;
+	z-index: 201!important;
+	background-position: -76px 0;
 }
 
 .tab-item > .anticon{
-	float: right;
+	position: absolute;
+	right: 14px;
 	margin-top: 12px;
     font-size: 17px !important;
     font-weight: 100;
@@ -140,12 +140,12 @@ a:link, a:visited{
 	position: fixed;
 	top: 56px;
 	bottom: 0;
-	width: 100px;
+	width: 110px;
 	background-color: #323239;
 }
 .dhb-logo{
 	display: inline-block;
-	width: 220px;
+	width: 230px;
 	height: 56px;
 	padding-top: 20px;
 	margin-top: -14px;
@@ -159,10 +159,9 @@ a:link, a:visited{
 	color: @dhb-theme-color;
 }
 .dhb-affix{
-	display: table-cell;
-	height: 56px;
+	position: absolute;
+	bottom: 15px;
 	padding-left: 20px;
-	vertical-align: middle;
 	cursor: pointer;
 }
 .dhb-affix > div{
@@ -197,7 +196,7 @@ a:link, a:visited{
 .dhb-sub-menu{
 	z-index: 1000;
 	position: fixed;
-	left: 100px;
+	left: 110px;
 	top: 56px;
 	bottom: 0;
 	width: 120px;
@@ -217,7 +216,7 @@ a:link, a:visited{
 }
 .sub-item{
 	display: block;
-	padding: 9px 15px 9px 19px;
+	padding: 8.5px 15px 8.5px 19px;
 	white-space: nowrap;
 	color: #fff;
 	overflow: hidden;

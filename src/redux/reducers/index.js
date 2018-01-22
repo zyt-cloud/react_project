@@ -6,7 +6,7 @@ import * as types from '../actions/index';
 const initGlobalStage = {
 	mode: 'vertical',
     theme: 'light',
-    preVersionUrl: process.env.NODE_ENV === 'production' ? '' : 'http://pc.newdhb.com'
+    preVersionUrl: process.env.NODE_ENV === 'production' ? '' : 'http://antdesign.newdhb.com/Manager/Home/index'
 }
 const initCountState = {
 	count: 0
@@ -92,7 +92,7 @@ const addTab = (tabs, tab, scrollTop) => {
  * @return {[type]}        [description]
  */
 const closeTab = (tabs, tab, history) => {
-	console.log(tabs, tab)
+
 	let _index = 0;
 	const _tabs = tabs.filter((item, index) => {
 		if(item.path !== tab.path){
@@ -101,17 +101,18 @@ const closeTab = (tabs, tab, history) => {
 		_index = index;
 		return false;
 	});
+	if(tab.isActive){
+		if(_index > 1){
+			history.push(tabs[_index - 1].url)
+		}
+		else if(_index === 1 && _tabs.length > 1){
+			history.push(tabs[_index + 1].url)
+		}
+		else{
+			history.push('/Manager/home');
+		}
+	}
 	
-	if(_index > 1){
-		history.push(tabs[_index - 1].url)
-	}
-	else if(_index === 1 && _tabs.length > 1){
-		history.push(tabs[_index + 1].url)
-	}
-	else{
-		history.push('/Manager/home');
-	}
-	console.log(_tabs)
 	return _tabs;
 }
 
