@@ -2,75 +2,12 @@ import React from 'react';
 
 import { NavLink } from 'react-router-dom';
 
-import { Menu, Icon } from 'antd';
+import ScrollBar from 'PAGES/common/scroll_bar'
+
+import { Menu, Icon, Input } from 'antd';
+
+
 const { SubMenu } = Menu;
-
-
-/*const menus = 
-  [{
-    name: '订单',
-    iconType: 'exception',
-    subs: [{
-      name: '订单管理',
-      isTitle: true,
-      path: ''
-    },{
-      name: '关于',
-      path: '/Manager/about'
-    },{
-      name: '订单明细',
-      isTitle: true,
-      path: ''
-    },{
-      name: '测试',
-      isTitle: false,
-      path: '/Manager/test'
-    },{
-      name: '关于',
-      isTitle: true,
-      path: '/Manager/home'
-    }]
-  },{
-    name: '运营',
-    iconType: 'trophy',
-    subs: [{
-      name: 'login',
-      path: '/login'
-    },{
-      name: '计数',
-      path: '/Manager/counter/zhangsan'
-    }]
-  },{
-    name: '商品',
-    iconType: 'appstore-o',
-    subs: [{
-      name: 'login',
-      path: '/login'
-    },{
-      name: '用户',
-      path: '/Manager/user'
-    }]
-  },{
-    name: '库存',
-    iconType: 'database',
-    subs: []
-  },{
-    name: '客户',
-    iconType: 'user',
-    subs: []
-  },{
-    name: '资金',
-    iconType: 'pay-circle-o',
-    subs: []
-  },{
-    name: '营销',
-    iconType: 'fork',
-    subs: []
-  },{
-    name: '报表',
-    iconType: 'pie-chart',
-    subs: []
-  }];*/
 
 
 export default class Navbar extends React.Component {
@@ -85,6 +22,9 @@ export default class Navbar extends React.Component {
       this.state = {
         showSub: isAffix,
         isAffix: isAffix,
+        showSearch: false,
+        searchText: '',
+        searchMenus: [],
         subs: menuIndex > -1 ? menus[menuIndex].subs : [],
         menuIndex
       };
@@ -205,6 +145,47 @@ export default class Navbar extends React.Component {
       
     }
 
+    toggleSeach = () => {
+      if(!this.state.showSearch){
+        setTimeout(() => {this.searchInput.focus()}, 100)
+      }
+
+      this.setState({
+        showSearch: !this.state.showSearch
+      })
+
+    }
+    searchChange = (e) => {
+      const value = e.target.value
+      this.setState({
+        searchText: value
+      })
+
+      if(this.searchTimer){
+        clearTimeout(this.searchTimer);
+      }
+
+      this.searchTimer = setTimeout(() => {
+        this.doSearch(value)
+        this.searchTimer = null
+      }, 1000)
+
+      
+    }
+    doSearch(val){
+      const { menus } = this.props;
+      let searchMenus = []
+
+      if(val){
+        menus.forEach(item => {
+          searchMenus.push(...item.subs.filter(sub => !sub.isTitle && sub.name.includes(val)))
+        })
+      }
+
+      this.setState({searchMenus})
+
+    }
+
     toggleAffix = () => {
       const { toggleAffix } = this.props; 
       toggleAffix();
@@ -213,25 +194,55 @@ export default class Navbar extends React.Component {
       })
     }
 
-
     render() {
         const { menus } = this.props;
+        const { subs, searchMenus, searchText } = this.state;
 
         return (
           <div>
             <div className="dhb-navbar">
-              <div onMouseEnter={this.toggleSubMenu} onMouseLeave={this.toggleSubMenu}>
-                <ul className="dhb-menu">
+              <ScrollBar className="dhb-menu" onMouseEnter={this.toggleSubMenu} onMouseLeave={this.toggleSubMenu}>
+                <ul>
                   {menus.map((item, index) => (
                     <li 
                       onMouseEnter={this.switchSubMenu.bind(this, index)} 
                       onMouseLeave={this.switchSubMenu.bind(this, index)} 
                       key={item.rule_id} 
                       className={`menu-item ${index === this.state.menuIndex ? 'active' : ''}`}>
-                        <Icon className="dhbicon" type={item.iconType} />{item.name}
+                        <span><i className={`menuicon ${item.iconType}`}></i>{item.name}</span>
                     </li>
                   ))}
-                  
+                </ul>
+              </ScrollBar>
+              <div className="navbar-footer">
+                <ul>
+                  <li className="menu-item">
+                    <span><Icon type="appstore-o" />应用</span>
+                  </li>
+                  <li className="menu-item" onClick={this.toggleSeach}>
+                    <span><Icon type="search" />搜索</span>
+                  </li>
+                </ul>
+              </div>
+            </div>
+            <div className={`menu-search ${this.state.showSearch ? '' : 'hide'}`}>
+              <Input 
+                size="small"
+                prefix={<Icon type="search" />}
+                ref={node => {this.searchInput = node}}
+                value={searchText}
+                onChange={this.searchChange}
+                placeholder="输入想访问的页面" />
+            </div>
+            <div className={`menu-result-wrap ${this.state.showSearch ? '' : 'hide'}`}>
+              <div><span style={{fontSize: '12px'}}>搜索结果</span><Icon onClick={this.toggleSeach} className="pull-right" type="close" style={{cursor: 'pointer'}} /></div>
+              <div className="menu-search-result">
+                <ul>
+                  {
+                    searchMenus.map(item => (
+                      <li key={item.path}><NavLink exact={true} to={item.path}><Icon type="search" />{item.name}<Icon className="pull-right" type="right" /></NavLink></li>
+                    ))
+                  }
                 </ul>
               </div>
             </div>
@@ -240,19 +251,23 @@ export default class Navbar extends React.Component {
                 <div><Icon type={this.state.isAffix ? 'swap-left' : 'swap-right'} /></div>
                 {this.state.isAffix ? '收起' : '固定'}
               </div>
-              <ul>
-                {this.state.subs.map((item, index) => (
-                    item.isTitle 
-                    ?
-                    <li key={item.path} className="sub-menu-title">{item.name}</li>
-                    :
-                    <li key={item.path}><NavLink exact={true} className="sub-item" to={item.path}>{item.name}</NavLink></li>
-                  )
-                )}  
-              </ul>
+              <ScrollBar>
+                <ul>
+                  {subs.map((item, index) => ( 
+                      item.isTitle 
+                      ?
+                      <li key={item.path} className="sub-menu-title">{item.name}</li>
+                      :
+                      <li key={item.path}><NavLink strict className="sub-item" to={item.path}>{item.name}</NavLink></li>
+                    )
+                  )}  
+                </ul>
+              </ScrollBar>
             </div>
             
           </div>
         );
     }
 }
+
+

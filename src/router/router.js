@@ -15,28 +15,6 @@ import zhCN from 'antd/lib/locale-provider/zh_CN';
 
 export default class RouterConfig extends React.Component{
 
-	/*componentWillMount() {
-		console.log('will mount')
-	}
-	componentDidMount() {
-		// preload
-		// User(() => {})	}
-	componentWillUpdate(nextProps, nextState) {
-		console.log('will Update')
-	}
-	componentDidUpdate(prevProps, prevState) {
-		console.log('did Update')
-	}
-	componentWillUnmount() {
-	    console.log('did WillUnmount')
-	}
-	componentWillReceiveProps(nextProps) {
-		console.log('WillReceiveProps')
-	}
-	
-	shouldComponentUpdate(nextProps, nextState) {
-	  	console.log('shouldComponentUpdate')
-	}*/
 	render() {
 		return (
 			<Router>
@@ -46,6 +24,7 @@ export default class RouterConfig extends React.Component{
 							<AuthRoute exact path="/" component={App} />
 							<Route path="/login" component={loadComponent(Login)}/>
 							<AuthRoute path="/Manager" component={App}/>
+							<AuthRoute path="/App" component={App}/>
 							<Route render={() => (<div>404 NOT FOUND</div>)}/>
 						</Switch>
 					</div>

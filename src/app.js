@@ -9,6 +9,8 @@ import { Route, Switch, NavLink } from 'react-router-dom'
 
 import { Breadcrumb } from 'antd';
 
+import { addTab } from 'REDUX/actions/index'
+
 
 
 import Home from 'PAGES/home/home';
@@ -109,13 +111,38 @@ export default class App extends Component {
 	  axios.get(`http://api.newdhb.com/api.php?controller=OAuth2Menu&action=menu&company_id=311`).then(this.onResolve,this.onRejected).catch(error => {
         onRejected(error)
       })
+      window.addEventListener('message', this.receiveMsg)
 	}
-	/*componentWillUnmount() {
-	  window.localStorage.setItem('_isAffix_', this.state.isAffix ? 'T' : 'F');
-	}*/
-	menuRouter(menus){
+	componentWillUnmount() {
+	  // window.localStorage.setItem('_isAffix_', this.state.isAffix ? 'T' : 'F');
+	  window.removeEventListener('message', this.receiveMsg)
+	}
 
-	}
+    receiveMsg = (e) => {
+      
+      if(e.origin.includes('localhost')){
+      	return;
+      }
+      const data = typeof e.data === 'string' ? JSON.parse(e.data) : e.data;
+      if(data.type === 'addTab'){
+      	  const tab = {
+	        // key: props.location.key,
+	        isActive: true,
+	        name: data.name,
+	        path: data.url,
+	        url: data.url
+	      }
+	      this.addTab(tab)
+	      
+	      const history = this.props.history
+	      history.push(data.url)
+      }
+      
+    }
+    addTab = (tab) => {
+    	const { store } = this.context;
+    	store.dispatch(addTab(tab, 0))
+    }
 
     render() {
     	const { history } = this.props;
@@ -128,7 +155,7 @@ export default class App extends Component {
             	<Index history={history} toggleAffix={this.toggleAffix} menus={this.state.menus} />
 
             	<div id="dhb-content" className="dhb-content" style={{left: this.state.isAffix ? '230px' : '110px'}}>
-            		<div className="dhb-bread">
+            		<div className="dhb-bread hide">
             		  <Breadcrumb>
 					    <Breadcrumb.Item><NavLink to="/Manager/Home/index">首页</NavLink></Breadcrumb.Item>
 					    <Breadcrumb.Item><a href="javascript:;">订单</a></Breadcrumb.Item>
@@ -149,6 +176,10 @@ export default class App extends Component {
 			                		<AuthRoute key={item.path} name={item.name} path={item.path} component={PreVersion}/>
 			                	))
 			                }
+
+			                <Route render={props => {
+			                	return <PreVersion addTab={this.addTab} {...props} />
+			                }}/>
 						</Switch>
 					</div>
 				</div>

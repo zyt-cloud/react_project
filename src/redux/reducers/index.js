@@ -94,6 +94,11 @@ const addTab = (tabs, tab, scrollTop) => {
 const closeTab = (tabs, tab, history) => {
 
 	let _index = 0;
+
+	if( tab === 'close_all' ){
+		history.push('/Manager/home');
+		return initTabs;
+	}
 	const _tabs = tabs.filter((item, index) => {
 		if(item.path !== tab.path){
 			return true

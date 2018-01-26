@@ -10,6 +10,9 @@ dl, ol, ul{
 li{
 	list-style: none;
 }
+a{
+	color: #000;
+}
 a:link, a:visited{
 	text-decoration: none;
 }
@@ -45,6 +48,20 @@ a:link, a:visited{
 }
 .clearfix:after{content:'\0020';display:block;height:0;clear:both;visibility:hidden;}
 
+.scroll-wrap{
+	overflow: hidden;
+	position: relative;
+	height: 100%;
+}
+.dhb-scroll-bar{
+	position: absolute;
+	right: 2px;
+	width: 4px;
+	border-radius: 8px;
+	background-color: #abcdef;
+	transition: top .1s;
+}
+
 #app{
     position: relative;
     min-width: 1280px;
@@ -55,8 +72,9 @@ a:link, a:visited{
 	position: absolute;
     left: 16px;
     right: 16px;
-    top: 80px;
+    top: 0;
     bottom: 4px;
+    margin: 0 -16px;
 }
 #pre-version > iframe{
 	width: 100%;
@@ -88,9 +106,22 @@ a:link, a:visited{
 .tab-wrap + div{
 	position: absolute;
 	right: 0;
-	top: 14px;
-	width: 160px;
-	padding: 0 16px;
+	top: 0;
+	bottom: 0;
+	width: 196px;
+	padding: 0 10px;
+}
+.header-action{
+	display: inline-block;
+	height: 100%;
+	width: 44px;
+	line-height: 56px;
+	text-align: center;
+	cursor: pointer;
+	transition: all .3s;
+}
+.header-action:hover{
+	background-color: #FFEEEA;
 }
 .tab-item{
 	position: relative;
@@ -102,14 +133,14 @@ a:link, a:visited{
 	border-radius: 2px 2px 0 0;
 	border: none;
 	font-size: 12px;
-	color: #424242;
+	color: rgba(0,0,0,0.85);
 	background: url(../img/icon.png) no-repeat -198px 0;
 	transition: background 0.01s; 
 }
-.more-tab-item{
+.more-tab-item, .action-item{
     padding: 9px 16px;
     margin: -5px -12px;
-	color: rgba(0, 0, 0, .65);
+	color: #000;
     transition: all .3s;
     border-left: 2px solid transparent;
 }
@@ -120,18 +151,40 @@ a:link, a:visited{
 .more-tab-item > .anticon{
 	margin-top: 3px;
 }
+.action-item > .anticon{
+	margin: 0 10px 0 -4px;
+}
+.tab-item > span{
+	overflow: hidden;
+	display: inline-block;
+	max-width: 72px;
+}
+.tab-item > span:after{
+	content: ' ';
+	position: absolute;
+	top: 10px;
+    left: 70px;
+    right: 10px;
+    height: 20px;
+	background: linear-gradient(left,rgba(222, 222, 222,0.3) 0%, rgba(222, 222, 222,.9) 20%); 
+}
+.tab-item.active > span:after{
+	background: linear-gradient(left,rgba(240, 240, 240,0.3) 0%, rgba(240, 240, 240,.9) 20%); 
+}
 
 .tab-item.active{
 	z-index: 201!important;
+	color: #000;
 	background-position: -76px 0;
 }
 
 .tab-item > .anticon{
 	position: absolute;
-	right: 14px;
-	margin-top: 12px;
+	right: 6px;
+	margin-top: 10px;
+	padding: 2px 8px;
     font-size: 17px !important;
-    font-weight: 100;
+    font-weight: 100;  
 }
 
 .dhb-navbar{
@@ -141,7 +194,12 @@ a:link, a:visited{
 	top: 56px;
 	bottom: 0;
 	width: 110px;
+	padding-bottom: 100px;
 	background-color: #323239;
+}
+.dhb-menu{
+	max-height: 100%;
+	overflow: hidden;
 }
 .dhb-logo{
 	display: inline-block;
@@ -150,17 +208,36 @@ a:link, a:visited{
 	padding-top: 20px;
 	margin-top: -14px;
 	vertical-align: middle;
+	font-size: 12px;
+}
+.dhb-logo .anticon-home{
+	padding-left: 18px;
+	margin-right: 4px;
+	font-size: 16px;
+}
+.dhb-logo > span:nth-child(1){
+	display: inline-block;
+	width: 60px;
+	margin: 0 16px 0 23px;
+}
+.dhb-logo > span:nth-child(3){
+	display: none;
 	cursor: pointer;
 }
-.dhb-logo > .anticon{
-	padding-left: 18px;
-	margin-right: 10px;
-	font-size: 18px;
+.dhb-logo:hover > span:nth-child(3){
+	display: inline-block;
+}
+.dhb-version-type{
+	display: inline-block;
+	padding: 0 8px;
+	height: 20px;
+	border: 1px solid @dhb-theme-color;
+	border-radius: 2px;
 	color: @dhb-theme-color;
 }
 .dhb-affix{
 	position: absolute;
-	bottom: 15px;
+	bottom: 8px;
 	padding-left: 20px;
 	cursor: pointer;
 }
@@ -174,23 +251,118 @@ a:link, a:visited{
 	background: #323239;
 	border-radius: 3px;
 }
+.navbar-footer{
+	position: absolute;
+	bottom: 0;
+	width: 100%;
+	font-size: 12px;
+}
+.navbar-footer .anticon{
+	margin-right: 13px;
+	font-size: 16px;
+	vertical-align: -2px;
+}
+.menu-result-wrap{
+	z-index: 1001;
+	position: fixed;
+	bottom: 52px;
+	width: 230px;
+	height: 500px;
+	padding: 14px 20px;
+	background-color: #fff;
+	box-shadow: 0 2px 8px 0 rgba(0,0,0,0.15);
+}
+.menu-search-result{
+	max-height: 450px;
+	overflow: auto;
+	margin: 0 -20px;
+}
+
+.menu-search-result li > a{
+	display: block;
+	padding: 12px 0 12px 20px;
+	line-height: 16px;
+	white-space: nowrap;
+}
+.menu-search-result a > .anticon{
+	margin-right: 12px;
+}
+
+.menu-search-result li:hover{
+	background-color: #f7f7f7;
+}
+.menu-search{
+	z-index: 1001;
+	position: fixed;
+	left: 0;
+	bottom: 0;
+	width: 228px;
+	padding-left: 11px;
+	line-height: 44px;
+	border-left: 2px solid @dhb-theme-color;
+	background-color: #27272F;
+}
+.menu-search .anticon{
+	font-size: 16px;
+	color: #fff;
+}
+.menu-search input.ant-input{
+	padding-left: 38px!important;
+	background-color: transparent;
+	border: none;
+	outline: 0;
+	font-size: 12px;
+	color: #fff;
+}
+.menu-search input:focus{
+	box-shadow: none;
+}
 .menu-item{
 	height: 44px;
 	line-height: 44px;
-	padding-left: 18px;
+	padding-left: 25px;
 	color: #fff;
 	vertical-align: middle;
 	cursor: pointer;
 	white-space: nowrap;
 }
-.menu-item > .dhbicon{
-	font-size: 18px;
-	margin-right: 10px;
-	vertical-align: sub;
-	color: @dhb-theme-color;
+.menuicon{
+	display: inline-block;
+	width: 16px;
+	height: 16px;
+	margin-right: 12px;
+	vertical-align: -3px;
+	background: url(../img/icon.png) no-repeat;
 }
 .menu-item.active, .menu-item:hover{
 	background-color: #27272F;
+}
+.operation-coin{
+	background-position: 0 -27px;
+}
+.present-coin{
+	background-position: 0 -52px;
+}
+.collaborate-coin{
+	background-position: -26px -105px;
+}
+.inbox{
+	background-position: 0 -79px;
+}
+.menuicon.user{
+	background-position: 0 -105px;
+}
+.menuicon.rmb{
+	background-position: -26px 0;
+}
+.menuicon.event-coin{
+	background-position: -26px -27px;
+}
+.menuicon.chart{
+	background-position: -26px -52px;
+}
+.menuicon.sysytem-coin{
+	background-position: -26px -79px;
 }
 
 .dhb-sub-menu{
@@ -200,8 +372,9 @@ a:link, a:visited{
 	top: 56px;
 	bottom: 0;
 	width: 120px;
+	padding-bottom: 50px;
 	// background: rgba(39,39,47,0.90);
-	background: -webkit-linear-gradient(right, rgba(39,39,47,0.90) 0%, #27272F 100%);
+	background: linear-gradient(right, rgba(39,39,47,0.90) 0%, #27272F 100%);
 	border-right: 1px solid #e0e0e0;
 	color: #fff;
 	opacity: 1;

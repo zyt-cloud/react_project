@@ -6,7 +6,8 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "dev": "webpack --config webpack.dev.config.js",
     "start": "webpack-dev-server --config webpack.dev.js --color --compress --progress --hot",
-    "build": "rimraf -- dist && webpack --config webpack.prod.js --color --progress"
+    "build": "npm run build:aot",
+    "build:aot": "rimraf -- dist && webpack --config webpack.prod.js --color --progress"
   },
   "keywords": [],
   "author": "zyt",

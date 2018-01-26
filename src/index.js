@@ -15,7 +15,9 @@ if(process.env.NODE_ENV !== 'production'){
 	require('../mock/mock');
 }
 
-
+/*console.log(18, process.env.npm_lifecycle_event)
+console.log(process.env.DHB_API)
+console.log(process.env.NODE_ENV)*/
 
 if(module.hot){
 	module.hot.accept();

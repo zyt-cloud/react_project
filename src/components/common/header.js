@@ -4,6 +4,36 @@ import { Tag, Icon, Button, Dropdown, Menu } from 'antd';
 
 import { triggerRefresh } from 'UTILS/utils';
 
+import dhbLogo from '../../assets/img/logo.png';
+
+const refreshMenu = (context) => (
+    <Menu onClick={context.refreshClick} style={{width: '140px'}}>
+        <Menu.Item key="reload">
+          <div className="action-item"><Icon type="reload" />刷新当前</div>
+        </Menu.Item>
+        <Menu.Item key="close_curr">
+          <div className="action-item"><Icon type="close" />关闭当前</div>
+        </Menu.Item>
+        <Menu.Item key="close_all">
+          <div className="action-item"><Icon type="poweroff" />关闭全部</div>
+        </Menu.Item>
+    </Menu>
+)
+const myMenu = (context) => (
+    <Menu onClick={context.refreshClick} style={{width: '140px'}}>
+        <Menu.Item key="1">
+          <div className="action-item"><Icon type="user" />我的账号</div>
+        </Menu.Item>
+        <Menu.Item key="2">
+          <div className="action-item"><Icon type="lock" />修改密码</div>
+        </Menu.Item>
+        <Menu.Divider />
+        <Menu.Item key="3">
+          <div className="action-item"><Icon type="logout" />退出登录</div>
+        </Menu.Item>
+    </Menu>
+)
+
 export default class Header extends Component {
 
 	/*changeMode = (value) => {
@@ -19,19 +49,46 @@ export default class Header extends Component {
       };
     }
     calShowTabsCount(){
-        const pageWidth = window.innerWidth;
+        let pageWidth = window.innerWidth;
+        pageWidth = pageWidth < 1280 ? 1280 : pageWidth;
         const tabWrapWidth = pageWidth - 400;
-        console.log(Math.floor(tabWrapWidth / 110))
 
         return Math.floor(tabWrapWidth / 110);
     }
     refreshTab = () => {
        triggerRefresh();
     }
-    closeTab(tab, e)  {
-        e && e.stopPropagation();
-        console.log(e)
+    toHome = () => {
+        const { history } = this.props;
 
+        history.push('/Manager/home')
+    }
+    refreshClick = (e) => {
+        const { key } = e;
+        switch(key){
+            case 'reload':
+                this.refreshTab();
+                break;
+
+            case 'close_curr':
+                const { tabs } = this.props;
+                const index = tabs.findIndex(item => item.isActive === true);
+
+                if(index > 0){
+                    this.closeTab(tabs[index]);
+                }
+                
+                break;
+
+            case 'close_all':
+                this.closeTab(key);
+                break;
+        }
+    }
+    closeTab(tab, e) {
+
+        e && e.stopPropagation();
+    
         const { closeTab, history } = this.props;
 
         closeTab(tab, history)
@@ -41,7 +98,14 @@ export default class Header extends Component {
             return;
         }
         const { history } = this.props;
-        history.push(tab.url)
+        const to = {
+            pathname: tab.url,
+            state: {
+                path: tab.path,
+                name: tab.name
+            }
+        }
+        history.push(to)
     }
 
     componentDidMount() {
@@ -58,7 +122,7 @@ export default class Header extends Component {
             this.tabTimer = setTimeout(() => {
                 this.setState({showTabsCount});
                 this.tabTimer = null;
-            }, 100)
+            }, 170)
         }
     }
     componentWillUnmount() {
@@ -104,9 +168,9 @@ export default class Header extends Component {
             </Tag>
         ) : (
             <Dropdown overlay={moreMenu}>
-                <Tag onClick={this.changeLocation.bind(this, preActive)} style={{left: (showTabsCount - 1) * -10 + 'px'}} className={`tab-item ${preActive.isActive?'active':''}`} closable={false}>
-                    {preActive.name}<Icon style={{marginTop: '16px'}} className="pull-right" type="down" />
-                </Tag>
+                <div onClick={this.changeLocation.bind(this, preActive)} style={{left: (showTabsCount - 1) * -10 + 'px', display: 'inline-block', cursor: 'pointer'}} className={`tab-item ${preActive.isActive?'active':''}`}>
+                    <span style={{display: 'inline-block', width: '70px'}}>{preActive.name}</span><Icon type="down" />
+                </div>
             </Dropdown>
         )
     }
@@ -117,7 +181,11 @@ export default class Header extends Component {
 
         return (
             <div className="dhb-header">
-                <div className="dhb-logo"><Icon type="copyright" />订货宝<Icon type="home" style={{margin: '0 2px 0 20px'}} />首页</div>
+                <div className="dhb-logo">
+                    <span className=""><img src={dhbLogo} alt="" /></span>
+                    <span className="dhb-version-type">专业版</span>
+                    <span onClick={this.toHome}><Icon type="home" />首页</span>
+                </div>
                 <div className="tab-wrap" ref={(tabWrap) => {this.tabWrap = tabWrap}}>
                     <div>
                         {tabs.filter((item, index) => index < (this.state.showTabsCount - 1)).map((tab, index) => (
@@ -130,7 +198,16 @@ export default class Header extends Component {
                         
                     </div>
                 </div>
-                <div><Button shape="circle" onClick={this.refreshTab} icon="reload" /></div>
+                <div>
+                    <Dropdown overlay={refreshMenu(this)}>
+                        <span className="header-action" onClick={this.refreshTab}><Icon type="reload" /></span>
+                    </Dropdown>
+                    <span className="header-action"><Icon type="bell" /></span>
+                    <span className="header-action"><Icon type="question-circle-o" /></span>
+                    <Dropdown overlay={myMenu(this)} placement="bottomRight">
+                        <span className="header-action"><Icon type="user" /></span>
+                    </Dropdown>
+                </div>
             </div>
         );
     }
