@@ -1,198 +1,224 @@
 import React, {Component} from 'react';
 
-// import Table from 'element-react/dist/npm/es5/src/table';
-import { Menu, Input, Divider, Popconfirm, Dropdown, Icon, message, Button } from 'antd';
+import Chart from 'PAGES/common/chart'
 
-import DHBTable from '../common/table';
+import './home.css';
 
-// import 'element-theme-default'
+import appCode from '../../assets/img/app_code.png'
 
-// import 'element-theme-default/lib/table.css'
-// import 'element-theme-default/lib/table-column.css'
-/*export default class Home extends Component{
-	render(){
-		return <div>Home Component this is Home ssss</div>
-	}
-}*/
-
-const menu = (
-  <Menu>
-    <Menu.Item>
-      <a target="_blank" rel="noopener noreferrer" href="http://www.alipay.com/">1st menu item</a>
-    </Menu.Item>
-    <Menu.Item>
-      <a target="_blank" rel="noopener noreferrer" href="http://www.taobao.com/">2nd menu item</a>
-    </Menu.Item>
-    <Menu.Item>
-      <a target="_blank" rel="noopener noreferrer" href="http://www.tmall.com/">3rd menu item</a>
-    </Menu.Item>
-  </Menu>
-);
-
-
-class EditableCell extends React.Component {
-  state = {
-    value: this.props.value,
-    editable: false,
-  }
-  handleChange = (e) => {
-    const value = e.target.value;
-    this.setState({ value });
-  }
-  inputClick = (e) => {
-  	e.stopPropagation();
-  }
-  check = () => {
-  	console.log('check')
-    this.setState({ editable: false });
-    if (this.props.onChange) {
-      this.props.onChange(this.state.value);
-    }
-  }
-  edit = () => {
-  	console.log('edit')
-    this.setState({ editable: true });
-  }
-  render() {
-    const { value, editable } = this.state;
-    return (
-      <div className="editable-cell">
-        {
-          editable ?
-            <div onClick={this.check} className="editable-cell-input-wrapper">
-              <Input
-                value={value} onClick={this.inputClick}
-                onChange={this.handleChange}
-                onPressEnter={this.check}
-              />
-              
-            </div>
-            :
-            <div onClick={this.edit} className="editable-cell-text-wrapper">
-              {value || ' '}
-              
-            </div>
+const chartConfig = {
+	chart: {
+        type: 'spline',
+        inverted: true
+    },
+    credits: {
+    	enabled: false
+    },
+    title: {
+        text: '大气温度和海拔高度关系'
+    },
+    subtitle: {
+        text: '根据标准大气模型绘制'
+    },
+    xAxis: {
+        reversed: false,
+        title: {
+            enabled: true,
+            text: '海拔高度'
+        },
+        labels: {
+            formatter: function () {
+                return this.value + 'km';
+            }
+        },
+        maxPadding: 0.05,
+        showLastLabel: true
+    },
+    yAxis: {
+        title: {
+            text: '温度'
+        },
+        labels: {
+            formatter: function () {
+                return this.value + '°';
+            }
+        },
+        lineWidth: 2
+    },
+    legend: {
+        enabled: false
+    },
+    tooltip: {
+        headerFormat: '<b>{series.name}</b><br/>',
+        pointFormat: '{point.x} km: {point.y}°C'
+    },
+    plotOptions: {
+        spline: {
+            marker: {
+                enable: false
+            }
         }
-      </div>
-    );
-  }
+    },
+    responsive: true,
+    series: [{
+        name: '温度',
+        data: [[0, 15], [10, -50], [20, -56.5], [30, -46.5], [40, -22.1],
+               [50, -2.5], [60, -27.7], [70, -55.7], [80, -76.5]]
+    }]
 }
 
 export default class Home extends Component{
 
-	constructor(props) {
-	    super(props);
-	    this.columns = [{
-	      title: 'name',
-	      dataIndex: 'name',
-	      width: '30%',
-	      render: (text, record) => (
-	        <EditableCell
-	          value={text}
-	          onChange={this.onCellChange(record.key, 'name')}
-	        />
-	      ),
-	    }, {
-	      title: 'age',
-	      dataIndex: 'age',
-	    }, {
-	      title: 'address',
-	      dataIndex: 'address'
-	    }, {
-	      title: 'operation',
-	      dataIndex: 'operation',
-	      render: (text, record) => {
-	        return (
-	          this.state.dataSource.length > 1 ?
-	          (
-	            <Popconfirm title="Sure to delete?" onConfirm={() => this.onDelete(record.key)}>
-	              <a href="#">Delete</a>
-	            </Popconfirm>
-	          ) : null
-	        );
-	      },
-	    }];
-
-	    this.state = {
-	      dataSource: [{
-	        key: '0',
-	        name: 'Edward King 0',
-	        age: '32',
-	        address: 'London, Park Lane no. 0',
-	      }, {
-	        key: '1',
-	        name: 'Edward King 1',
-	        age: '32',
-	        address: 'London, Park Lane no. 1',
-	      }],
-	      count: 2,
-	    };
-	  }
-	  onCellChange = (key, dataIndex) => {
-	    return (value) => {
-	      const dataSource = [...this.state.dataSource];
-	      const target = dataSource.find(item => item.key === key);
-	      if (target) {
-	        target[dataIndex] = value;
-	        this.setState({ dataSource });
-	      }
-	    };
-	  }
-	  onDelete = (key) => {
-	    const dataSource = [...this.state.dataSource];
-	    this.setState({ dataSource: dataSource.filter(item => item.key !== key) });
-	  }
-	  handleAdd = () => {
-	    const { count, dataSource } = this.state;
-	    const newData = {
-	      key: count,
-	      name: `Edward King ${count}`,
-	      age: 32,
-	      address: `London, Park Lane no. ${count}`,
-	    };
-	    this.setState({
-	      dataSource: [...dataSource, newData],
-	      count: count + 1,
-	    });
-	}
-	componentDidMount() {
-		console.log(this.props)
-	}
-	showMsg = () => {
-		const hide = message.loading('Action in progress..', 3);
-		// Dismiss manually and asynchronously
-		//setTimeout(hide, 2500);
-		let column = this.columns[1]
-		if(column.colSpan === 0){
-			delete column.colSpan;
-			delete column.render;
-		}else{
-			column.colSpan = 0;
-			column.render = (text) => {
-				return {
-					props: {
-						colSpan: 0
-					}
-				}
-			}
-		}
-		this.setState({columns: this.columns})
-	}
-
+	
 	render() {
-	  const { dataSource } = this.state;
-      const columns = this.columns;
 	  return (
-	  	<div>
-	  		<Button onClick={this.showMsg}>Display a loading indicator</Button>
-	  		<Dropdown overlay={menu}>
-		        <a className="ant-dropdown-link" href="#">
-		         Hover me <Icon type="down" />
-		        </a>
-		    </Dropdown>
-		    <div><Icon type="link" /></div>
-		    <DHBTable bordered dataSource={dataSource} size="middle" columns={columns} />
+	  	<div className="dhb-home">
+	  		<div className="home-header">home</div>
+	  		<div className="home-main clearfix">
+
+	  			<div className="home-right">
+	  				<div>
+	  					<div className="home-preview">
+	  						<div className="home-preview-icon"></div>
+							<div>
+								<span className="home-nav-title">预览电脑端</span>
+								<span>在电脑上订货</span>
+							</div>
+	  					</div>
+	  					<div className="home-preview">
+	  						<div className="home-preview-icon"></div>
+							<div>
+								<span className="home-nav-title">预览手机端</span>
+								<span>订货加管理</span>
+								<img className="home-code" src={appCode} alt="" />
+							</div>
+	  					</div>
+	  				</div>
+	  				<div>
+	  					<div className="home-block-title">官方通知<a className="dhb-link">查看更多</a></div>
+	  					<div className="dhb-notice">
+							<ul>
+								<li className="dhb-notice-item">
+									<div className="color999">2018-12-12</div>
+									<div className="ellipsis">【升级】升级通知</div>
+								</li>
+								<li className="dhb-notice-item">
+									<div className="color999">2018-12-12</div>
+									<div className="ellipsis">【升级】升级通知</div>
+								</li>
+								<li className="dhb-notice-item">
+									<div className="color999">2018-12-12</div>
+									<div className="ellipsis">【升级】升级通知</div>
+								</li>
+								<li className="dhb-notice-item">
+									<div className="color999">2018-12-12</div>
+									<div className="ellipsis">【升级】升级通知</div>
+								</li>
+								<li className="dhb-notice-item">
+									<div className="color999">2018-12-12</div>
+									<div className="ellipsis">【升级】升级通知</div>
+								</li>
+							</ul>
+	  					</div>
+	  				</div>
+	  				<div>
+						<div className="home-block-title">下载</div>
+	  				</div>
+	  				<div>
+						<div className="home-block-title">邀请客户注册</div>
+	  				</div>
+	  			</div>
+
+				<div className="home-left">
+					<div>
+						<div className="home-nav-item clearfix">
+							<div className="home-nav-icon"></div>
+							<div>
+								<span className="home-nav-title">订单红包</span>
+								<span>营销提升下单率</span>
+							</div>
+						</div>
+						<div className="home-nav-item clearfix">
+							<div className="home-nav-icon"></div>
+							<div>
+								<span className="home-nav-title">客户使用分析</span>
+								<span>辨识高价值客户</span>
+							</div>
+						</div>
+						<div className="home-nav-item clearfix">
+							<div className="home-nav-icon"></div>
+							<div>
+								<span className="home-nav-title">搜索指数</span>
+								<span>大家都在找哪些商品</span>
+							</div>
+						</div>
+						<div className="home-nav-item clearfix">
+							<div className="home-nav-icon"></div>
+							<div>
+								<span className="home-nav-title">招商加盟</span>
+								<span>一键邀请开通系统</span>
+							</div>
+						</div>
+					</div>
+
+					<div>
+	  					<div className="home-block-title">待处理</div>
+	  					<div>
+	  						<ul>
+	  							<li className="home-pending">
+	  								<a>
+		  								<div>待审核</div>
+		  								<div>45</div>
+	  								</a>
+	  							</li>
+	  							<li className="home-pending">
+	  								<a>
+		  								<div>待出库</div>
+		  								<div>45</div>
+	  								</a>
+	  							</li>
+	  							<li className="home-pending">
+	  								<a>
+		  								<div>待发货</div>
+		  								<div>45</div>
+		  							</a>
+	  							</li>
+	  							<li className="home-pending">
+	  								<a>
+		  								<div>待确认收货</div>
+		  								<div>45</div>
+		  							</a>
+	  							</li>
+	  							<li className="home-pending">
+	  								<a>
+		  								<div>待退货审核</div>
+		  								<div>45</div>
+		  							</a>
+	  							</li>
+	  							<li className="home-pending">
+	  								<a>
+		  								<div>待确认退货</div>
+		  								<div>45</div>
+		  							</a>
+	  							</li>
+	  						</ul>
+	  					</div>
+	  				</div>
+
+	  				<div>
+	  					<div className="home-block-title">业绩环比</div>
+	  				</div>
+
+	  				<div>
+	  					<div className="home-block-title">订单<a className="dhb-link">查看更多</a></div>
+	  					<div>
+	  						<Chart options={chartConfig} />
+	  					</div>
+	  				</div>
+				</div>
+				
+	  		</div>
 	    </div>
-	 )
+	  )
 	}
 }

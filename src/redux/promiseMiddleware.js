@@ -1,4 +1,4 @@
-import axios from 'axios';
+import axios from 'UTILS/http';
 
 export default  store => next => action => {
     const {dispatch, getState} = store;

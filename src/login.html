@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title></title>
+</head>
+<body>
+	<script>
+		window.addEventListener('message', function(event) {
+		    //console.log('event.origin：  ' +event.origin);
+
+		    //if(event.origin != 'http://a.localstorage.cn') {
+		        //return;
+		    //}
+
+		    var data = event.data;
+
+		    // menu
+		    if (data.indexOf('loginData:') > -1) {
+		        //console.log('receipts loginData data');
+
+		        localStorage.setItem('loginData', data.substr(10));
+		    }
+
+		    event.source.postMessage('antdesign-ok',event.origin);
+		},false);
+
+	</script>
+</body>
+</html>

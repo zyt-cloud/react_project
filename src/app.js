@@ -1,13 +1,13 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types'
 
-import axios from 'axios';
+import axios from 'UTILS/http';
 
 import Index from 'PAGES/index/index'
 
 import { Route, Switch, NavLink } from 'react-router-dom'
 
-import { Breadcrumb } from 'antd';
+import { Breadcrumb, Spin, Icon } from 'antd';
 
 import { addTab } from 'REDUX/actions/index'
 
@@ -24,14 +24,23 @@ import User from 'bundle-loader?lazy&name=user!PAGES/user/user';
 import { loadComponent, AuthRoute } from 'UTILS/utils'
 
 
+let windowWidth = window.innerWidth;
+
 export default class App extends Component {
 
-	state = {
+	
+	constructor(props) {
+	  super(props);
+	
+	  this.state = {
 		isAffix: window.localStorage.getItem('_isAffix_') === 'T',
-		preUrl: this.context.store.getState().app.globalData.preVersionUrl,
+		showHelp: windowWidth >= 1600,
+		// preUrl: this.context.store.getState().app.globalData.preVersionUrl,
+		preUrl: PRE_URL,
 		menus: [],
 		menuRoute: [],
 		localMenus: ['/Manager/about', '/Manager/home', '/Manager/counter/zhangsan', '/Manager/user']
+	  }
 	}
 
 	componentWillReceiveProps(nextProps) {
@@ -49,15 +58,27 @@ export default class App extends Component {
 	  	  document.getElementById('dhb-content').scrollTop = tab.scrollTop;
 	    }
 	}
-	toggleAffix = () => {
-		const flag = !this.state.isAffix
+	toggleAffix = (type) => {
+		const flag = !this.state[type]
 		
 		this.setState({
-			isAffix: flag
+			[type]: flag
 		})
+		if(type === 'isAffix'){
+			window.localStorage.setItem('_' + type + '_', flag ? 'T' : 'F');
+		}
 
-		window.localStorage.setItem('_isAffix_', flag ? 'T' : 'F');
+
+		// highcharts 需要触发resize事件来动态更新chart reflow 重新适应容器大小
+		setTimeout(() => {
+			let e = document.createEvent('HTMLEvents');
+
+			e.initEvent('resize', true, true);
+			window.dispatchEvent(e);
+		}, 400)
+		
 	}
+
 	initMenus(menus){
 		const menuRoute = []
 		menus.forEach(item => {
@@ -84,6 +105,8 @@ export default class App extends Component {
 
 		const menuRoute = this.initMenus(res.data.data);
 
+		const initEl = document.getElementById('init-sys')
+
 		res.data.data[0].subs.push({
 			name: '关于',
 			path: '/Manager/about',
@@ -103,13 +126,25 @@ export default class App extends Component {
 			menus: res.data.data,
 			menuRoute
 		})
+
+		initEl.style.opacity = 0;
+
+		setTimeout(() => {initEl.parentNode.removeChild(initEl)}, 150);
+
 	}
 	onRejected = (error) => {
 		console.log(error)
 	}
 	componentDidMount() {
-	  axios.get(`http://api.newdhb.com/api.php?controller=OAuth2Menu&action=menu&company_id=311`).then(this.onResolve,this.onRejected).catch(error => {
-        onRejected(error)
+	  //?controller=OAuth2Menu&action=menu&company_id=311
+	  axios.get('', {
+	  	params: {
+	  		controller: 'OAuth2Menu',
+	  		action: 'menu',
+	  		company_id: '311'
+	  	}
+	  }).then(this.onResolve,this.onRejected).catch(error => {
+        this.onRejected(error)
       })
       window.addEventListener('message', this.receiveMsg)
 	}
@@ -126,7 +161,7 @@ export default class App extends Component {
       const data = typeof e.data === 'string' ? JSON.parse(e.data) : e.data;
       if(data.type === 'addTab'){
       	  const tab = {
-	        // key: props.location.key,
+	        // key: props.location.key, key
 	        isActive: true,
 	        name: data.name,
 	        path: data.url,
@@ -146,15 +181,21 @@ export default class App extends Component {
 
     render() {
     	const { history } = this.props;
-    	let {menus, menuRoute, localMenus } = this.state;
+    	let {menus, menuRoute, localMenus, showHelp, preUrl,  _right = 0 } = this.state;
     	menuRoute = menuRoute.filter(item => localMenus.findIndex(localItem => localItem === item.path) === -1);
 
+    	const antIcon = <Icon type="loading" style={{ fontSize: 24 }} spin />;
+    	const _windowWidth = window.innerWidth;
+    	if(_windowWidth >= 1600 && showHelp){
+    		_right = '194px';
+    	}
+    	
 
         return (
             <div>
-            	<Index history={history} toggleAffix={this.toggleAffix} menus={this.state.menus} />
+            	<Index history={history} toggleAffix={this.toggleAffix} menus={menus} showHelp={showHelp} />
 
-            	<div id="dhb-content" className="dhb-content" style={{left: this.state.isAffix ? '230px' : '110px'}}>
+            	<div id="dhb-content" className="dhb-content" style={{left: this.state.isAffix ? '230px' : '110px', right: _right}}>
             		<div className="dhb-bread hide">
             		  <Breadcrumb>
 					    <Breadcrumb.Item><NavLink to="/Manager/Home/index">首页</NavLink></Breadcrumb.Item>
@@ -162,7 +203,7 @@ export default class App extends Component {
 					    <Breadcrumb.Item>订单管理</Breadcrumb.Item>
 					  </Breadcrumb>
   					</div>
-  					<div id="pre-version" style={{display: 'none'}}><iframe src={this.state.preUrl} frameBorder="0"></iframe></div>
+  					<div id="pre-version" style={{display: 'none'}}><iframe src={preUrl} frameBorder="0"></iframe></div>
   					<div className="dhb-wrap">
 						<Switch>
 							<AuthRoute name="首页" exact path="/" component={Home} />
@@ -176,6 +217,8 @@ export default class App extends Component {
 			                		<AuthRoute key={item.path} name={item.name} path={item.path} component={PreVersion}/>
 			                	))
 			                }
+
+			               {/* 次处为页面内部链接点击新增标签 */}
 
 			                <Route render={props => {
 			                	return <PreVersion addTab={this.addTab} {...props} />

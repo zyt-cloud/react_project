@@ -3,7 +3,7 @@ const path = require('path');
 const webpack = require('webpack');
 
 const htmlWebpackPlugin = require('html-webpack-plugin');
-// const copyWebpackPlugin = require('copy-webpack-plugin');
+const copyWebpackPlugin = require('copy-webpack-plugin');
 
 const ExtractTextPlugin = require('extract-text-webpack-plugin');
 const extractLess = new ExtractTextPlugin("assets/css/less.[contenthash:6].css");
@@ -28,6 +28,14 @@ if (pkg.theme && typeof(pkg.theme) === 'string') {
     theme = pkg.theme;
 }
 
+const DHB_API = process.env.npm_lifecycle_event === 'start' ? 'http://api.newdhb.com/api.php' 
+              : process.env.npm_lifecycle_event === 'build' ? 'http://api.newdhb.com/api.php' 
+              : 'https://api.ymanager.com/api.php'
+
+// iframe 地址
+const PRE_URL = process.env.npm_lifecycle_event === 'start' ? 'http://antdesign.newdhb.com/Manager/Home/index'
+              : process.env.npm_lifecycle_event === 'build' ? 'http://antdesign.newdhb.com/Manager/Home/index'
+              : 'http://antdesign.newdhb.com/Manager/Home/index'
 
 module.exports = {
 	// entry: path.join(__dirname, 'src/index.js'),
@@ -124,15 +132,8 @@ module.exports = {
 			template: path.join(__dirname, 'src/index.html')
 		}),
 		new webpack.DefinePlugin({
-			'process.env': {
-				DHB_API: JSON.stringify('wwwwwwww')
-			}
-		}),
-
-		new webpack.DefinePlugin({
-			'process.env': {
-				NODE_ENV: JSON.stringify('develop')
-			}
+			'DHB_API':  JSON.stringify(DHB_API),
+			'PRE_URL': JSON.stringify(PRE_URL)
 		}),
 
 
@@ -157,9 +158,9 @@ module.exports = {
 		extractLess,
 		extractCss,
 
-		/*new copyWebpackPlugin([{
-			from: 'src/assets', to: 'assets'
-		}])*/
+		new copyWebpackPlugin([{
+			from: 'src/assets/static', to: 'assets/static'
+		}])
 
 		/*new webpack.LoaderOptionsPlugin({  
             options: {  

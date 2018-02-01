@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 
-import { Tag, Icon, Button, Dropdown, Menu } from 'antd';
+import { Tag, Icon, Button, Dropdown, Menu, Avatar } from 'antd';
 
 import { triggerRefresh } from 'UTILS/utils';
 
@@ -21,6 +21,24 @@ const refreshMenu = (context) => (
 )
 const myMenu = (context) => (
     <Menu onClick={context.refreshClick} style={{width: '140px'}}>
+        <Menu.Item key="4">
+          <div className="action-item user-account">dhb168</div>
+        </Menu.Item>
+        <Menu.Item key="1">
+          <div className="action-item"><Icon type="user" />我的账号</div>
+        </Menu.Item>
+        <Menu.Item key="2">
+          <div className="action-item"><Icon type="lock" />修改密码</div>
+        </Menu.Item>
+        <Menu.Divider />
+        <Menu.Item key="3">
+          <div className="action-item"><Icon type="logout" />退出登录</div>
+        </Menu.Item>
+    </Menu>
+)
+
+const helpMenu = (context) => (
+    <Menu style={{width: '140px'}}>
         <Menu.Item key="1">
           <div className="action-item"><Icon type="user" />我的账号</div>
         </Menu.Item>
@@ -109,7 +127,6 @@ export default class Header extends Component {
     }
 
     componentDidMount() {
-
       window.addEventListener('resize', this.resizeWindow)
     }
     // 动态计算tab标签数量
@@ -127,6 +144,10 @@ export default class Header extends Component {
     }
     componentWillUnmount() {
       window.removeEventListener('resize', this.resizeWindow)
+    }
+    toggleHelp = () => {
+      const { toggleAffix } = this.props; 
+      toggleAffix('showHelp');
     }
 
     getMoreMenu(){
@@ -181,10 +202,10 @@ export default class Header extends Component {
 
         return (
             <div className="dhb-header">
-                <div className="dhb-logo">
+                <div className="dhb-logo" onClick={this.toHome}>
                     <span className=""><img src={dhbLogo} alt="" /></span>
                     <span className="dhb-version-type">专业版</span>
-                    <span onClick={this.toHome}><Icon type="home" />首页</span>
+                    <span><Icon type="rollback" />首页</span>
                 </div>
                 <div className="tab-wrap" ref={(tabWrap) => {this.tabWrap = tabWrap}}>
                     <div>
@@ -203,9 +224,9 @@ export default class Header extends Component {
                         <span className="header-action" onClick={this.refreshTab}><Icon type="reload" /></span>
                     </Dropdown>
                     <span className="header-action"><Icon type="bell" /></span>
-                    <span className="header-action"><Icon type="question-circle-o" /></span>
+                    <span onClick={this.toggleHelp} className="header-action"><Icon type="question-circle-o" /></span>
                     <Dropdown overlay={myMenu(this)} placement="bottomRight">
-                        <span className="header-action"><Icon type="user" /></span>
+                        <span className="header-action"><Avatar size="small" style={{ backgroundColor: '#87d068' }} icon="user" /></span>
                     </Dropdown>
                 </div>
             </div>

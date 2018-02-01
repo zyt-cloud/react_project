@@ -2,6 +2,8 @@ import React from 'react';
 
 import { NavLink } from 'react-router-dom';
 
+import ClickOutside from 'react-click-outside';
+
 import ScrollBar from 'PAGES/common/scroll_bar'
 
 import { Menu, Icon, Input } from 'antd';
@@ -10,7 +12,7 @@ import { Menu, Icon, Input } from 'antd';
 const { SubMenu } = Menu;
 
 
-export default class Navbar extends React.Component {
+class Navbar extends React.Component {
 
     constructor(props) {
       super(props);
@@ -145,6 +147,14 @@ export default class Navbar extends React.Component {
       
     }
 
+    handleClickOutside(){
+      if(this.state.showSearch){
+        this.setState({
+          showSearch: false
+        })
+      }
+    }
+
     toggleSeach = () => {
       if(!this.state.showSearch){
         setTimeout(() => {this.searchInput.focus()}, 100)
@@ -188,7 +198,7 @@ export default class Navbar extends React.Component {
 
     toggleAffix = () => {
       const { toggleAffix } = this.props; 
-      toggleAffix();
+      toggleAffix('isAffix');
       this.setState({
         isAffix: !this.state.isAffix
       })
@@ -201,8 +211,8 @@ export default class Navbar extends React.Component {
         return (
           <div>
             <div className="dhb-navbar">
-              <ScrollBar className="dhb-menu" onMouseEnter={this.toggleSubMenu} onMouseLeave={this.toggleSubMenu}>
-                <ul>
+              <ScrollBar>
+                <ul onMouseEnter={this.toggleSubMenu} onMouseLeave={this.toggleSubMenu}>
                   {menus.map((item, index) => (
                     <li 
                       onMouseEnter={this.switchSubMenu.bind(this, index)} 
@@ -217,10 +227,10 @@ export default class Navbar extends React.Component {
               <div className="navbar-footer">
                 <ul>
                   <li className="menu-item">
-                    <span><Icon type="appstore-o" />应用</span>
+                    <span><i className="menuicon icon-app"></i>应用</span>
                   </li>
                   <li className="menu-item" onClick={this.toggleSeach}>
-                    <span><Icon type="search" />搜索</span>
+                    <span><i className="menuicon icon-search"></i>搜索</span>
                   </li>
                 </ul>
               </div>
@@ -271,3 +281,4 @@ export default class Navbar extends React.Component {
 }
 
 
+export default ClickOutside(Navbar)

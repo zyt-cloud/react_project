@@ -5,8 +5,7 @@ import * as types from '../actions/index';
 
 const initGlobalStage = {
 	mode: 'vertical',
-    theme: 'light',
-    preVersionUrl: process.env.NODE_ENV === 'production' ? '' : 'http://antdesign.newdhb.com/Manager/Home/index'
+    theme: 'light'
 }
 const initCountState = {
 	count: 0

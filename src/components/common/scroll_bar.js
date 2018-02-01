@@ -9,34 +9,13 @@ import React, { Component } from 'react';
  */
 export default class ScrollBar extends Component {
 
-	/*state = {
-		height: 0,
-		top:0
-	}*/
-
-
-	/*componentWillReceiveProps() {
-	  const { offsetHeight, scrollHeight} = this.scrollWrap;
-
-	  if(scrollHeight - offsetHeight > 4){
-			this.setState({
-				height: Math.pow(offsetHeight, 2) / scrollHeight + 'px'
-			})
-		}
-	}*/
-
-
 	mouseScroll = (e) => {
-
 
 		e.stopPropagation();
 
 		const { currentTarget: target, deltaY} = e;
 
 		const { scrollTop, offsetHeight, scrollHeight} = target;
-
-		
-
 		
 		if(scrollHeight - offsetHeight < 4){
 			return;
@@ -56,22 +35,49 @@ export default class ScrollBar extends Component {
 			}
 			target.scrollTop = scrollTop - step;
 		}
-		//this.setTop(scrollTop + step, scrollHeight)
+		// this.setTop(target.scrollTop, scrollHeight)
 	}
-	/*setTop(scrollTop, scrollHeight){
-		const height = this.state.height;
-
-		this.setState({
-			top: height * scrollTop / scrollHeight + 'px'
-		})
-	}*/
-
 	render() {
 		return (
-			<div onWheel={this.mouseScroll} className="scroll-wrap">
+			<div className="scroll-wrap" onWheel={this.mouseScroll}>
 				{this.props.children}
 			</div>
 		);
 	}
+	/*state = {
+		height: 0,
+		top:0
+	}
+
+	setTop(scrollTop, scrollHeight){
+		const height = this.state.height;
+
+
+		this.setState({
+			top: scrollTop + Number.parseInt(height) * scrollTop / scrollHeight + 'px'
+		})
+	}
+
+	initkScrollBar = (e) => {
+		const { offsetHeight, scrollHeight} = this.scrollWrap;
+
+	    if(scrollHeight - offsetHeight > 4){
+			this.setState({
+				height: Math.pow(offsetHeight, 2) / scrollHeight + 'px'
+			})
+		}
+	}
+	hideScrollBar = (e) => {
+
+	}
+
+	render() {
+		return (
+			<div className="scroll-wrap" ref={node => this.scrollWrap = node} onWheel={this.mouseScroll} onMouseEnter={this.initkScrollBar} onMouseLeave={this.hideScrollBar}>
+				{this.props.children}
+				<div className="dhb-scroll-bar" style={this.state}></div>
+			</div>
+		);
+	}*/
 }
 

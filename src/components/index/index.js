@@ -4,6 +4,7 @@ import { connect } from 'react-redux';
 
 import Header from 'PAGES/common/header';
 import Navbar from 'PAGES/common/navbar';
+import Help from 'PAGES/common/help';
 
 
 import { closeTab  } from 'REDUX/actions/index';
@@ -20,13 +21,16 @@ const mapStateToProps = ({ app, ...props }) => ({
 
 export class Index extends Component {
 
+
+
     render() {
-        const { globalData, closeTab, toggleAffix, menus, ...props } = this.props;
+        const { globalData, closeTab, showHelp, menus, ...props } = this.props;
 
         return (
             <div>
             	<Header closeTab={closeTab} {...props} />
-            	<Navbar toggleAffix={toggleAffix} menus={menus} mode={globalData.mode} theme={globalData.theme} {...props} />
+            	<Navbar menus={menus} mode={globalData.mode} theme={globalData.theme} {...props} />
+                <Help style={{right: showHelp ? 0 : '-194px'}} />
             </div>
         );
     }
