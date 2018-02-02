@@ -143,7 +143,22 @@ export default class App extends Component {
 	  		action: 'menu',
 	  		company_id: '311'
 	  	}
-	  }).then(this.onResolve,this.onRejected).catch(error => {
+	  })
+	  /*axios.post('', {
+  		controller: 'OAuth2Menu',
+  		action: 'menu',
+  		company_id: '311'
+	  })
+	  axios({
+	  	url: '',
+	  	method: 'post',
+	  	data: {
+	  		controller: 'OAuth2Menu',
+	  		action: 'menu',
+	  		company_id: '311'
+	  	}
+	  })*/
+	  .then(this.onResolve,this.onRejected).catch(error => {
         this.onRejected(error)
       })
       window.addEventListener('message', this.receiveMsg)

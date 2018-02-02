@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 
-import { Tag, Icon, Button, Dropdown, Menu, Avatar } from 'antd';
+import { Tag, Icon, Button, Dropdown, Menu, Avatar, Badge } from 'antd';
 
 import { triggerRefresh } from 'UTILS/utils';
 
@@ -223,7 +223,7 @@ export default class Header extends Component {
                     <Dropdown overlay={refreshMenu(this)}>
                         <span className="header-action" onClick={this.refreshTab}><Icon type="reload" /></span>
                     </Dropdown>
-                    <span className="header-action"><Icon type="bell" /></span>
+                    <span className="header-action"><Badge dot><Icon type="bell" /></Badge></span>
                     <span onClick={this.toggleHelp} className="header-action"><Icon type="question-circle-o" /></span>
                     <Dropdown overlay={myMenu(this)} placement="bottomRight">
                         <span className="header-action"><Avatar size="small" style={{ backgroundColor: '#87d068' }} icon="user" /></span>

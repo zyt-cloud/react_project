@@ -2,7 +2,9 @@ import React, {Component} from 'react';
 
 import Chart from 'PAGES/common/chart'
 
-import { Icon, Button, Alert } from 'antd'
+import copy from 'copy-to-clipboard'
+
+import { Icon, Button, Alert, Input, message } from 'antd'
 
 import './home.css';
 
@@ -10,6 +12,7 @@ import appCode from '../../assets/img/app_code.png'
 
 const chartConfig = {
 	chart: {
+		height: '352px',
         type: 'spline',
         inverted: true
     },
@@ -156,6 +159,15 @@ export default class Home extends Component{
 	  				</div>
 	  				<div>
 						<div className="home-block-title">邀请客户注册</div>
+						<div className="home-register">
+							<div>电脑访问<Input readyonly="true" size="small" defaultValue="https://ant.design/components/input-cn/" />
+								<Button size="small" onClick={() => {copy('https://ant.design/components/input-cn');message.success('复制成功');}}>复制</Button>
+							</div>
+							<div>手机访问<Input readyonly="true" size="small" defaultValue="https://ant.design/components/input-cn/" />
+								<Button size="small" onClick={() => {copy('https://ant.design/components/input-cn');message.success('复制成功');}}>复制</Button>
+							</div>
+							<div><a className="dhb-link">下载店铺二维码，发给客户</a></div>
+						</div>
 	  				</div>
 	  			</div>
 
@@ -263,7 +275,7 @@ export default class Home extends Component{
 
 	  				<div>
 	  					<div className="home-block-title">订单<a className="dhb-link">查看更多</a></div>
-	  					<div>
+	  					<div className="home-chart">
 	  						<Chart options={chartConfig} />
 	  					</div>
 	  				</div>

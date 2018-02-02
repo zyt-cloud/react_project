@@ -1,5 +1,7 @@
 import React, { Component } from 'react';
-
+/**
+ * 帮助中心
+ */
 export default class Help extends Component {
 	render() {
 		return (

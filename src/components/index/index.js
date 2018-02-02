@@ -21,8 +21,6 @@ const mapStateToProps = ({ app, ...props }) => ({
 
 export class Index extends Component {
 
-
-
     render() {
         const { globalData, closeTab, showHelp, menus, ...props } = this.props;
 

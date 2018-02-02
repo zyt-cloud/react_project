@@ -47,6 +47,7 @@
     "antd": "^3.0.2",
     "axios": "^0.17.1",
     "classlist-polyfill": "^1.2.0",
+    "copy-to-clipboard": "^3.0.8",
     "highcharts": "^6.0.5",
     "react": "^16.2.0",
     "react-click-outside": "^3.0.0",
