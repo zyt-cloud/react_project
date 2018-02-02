@@ -2,6 +2,8 @@ import React, {Component} from 'react';
 
 import Chart from 'PAGES/common/chart'
 
+import { Icon, Button, Alert } from 'antd'
+
 import './home.css';
 
 import appCode from '../../assets/img/app_code.png'
@@ -73,7 +75,18 @@ export default class Home extends Component{
 	render() {
 	  return (
 	  	<div className="dhb-home">
-	  		<div className="home-header">home</div>
+	  		<div className="home-header">
+	  			<div>
+	  				<div className="hearder-account">
+		  				<div>成都阿商</div>
+		  				<div className="color999">有效时间：2017-02-06 至 2018-02-07</div>
+	  				</div>
+	  			</div>
+	  			<div>
+	  				<div>当前版本：专业版v3.1 <Button size="small">特性</Button><Button size="small" value="default">升级</Button></div>
+	  				<div>剩余短信：4 条<span><Icon type="exclamation-circle" />短信余额不足</span><Button size="small" type="primary">充值</Button></div>
+	  			</div>
+	  		</div>
 	  		<div className="home-main clearfix">
 
 	  			<div className="home-right">
@@ -123,6 +136,23 @@ export default class Home extends Component{
 	  				</div>
 	  				<div>
 						<div className="home-block-title">下载</div>
+						<div className="home-download">
+							<div>
+								<div className="download-icon"><Icon type="apple" /></div>
+								<div>iOS版</div>
+								<div><img className="home-code" src={appCode} alt="" /></div>
+							</div>
+							<div>
+								<div className="download-icon"><Icon style={{color:'#8FB614'}} type="android" /></div>
+								<div>Android版</div>
+								<div><img className="home-code" src={appCode} alt="" /></div>
+							</div>
+							<div>
+								<div className="download-icon"><Icon style={{color:'#3EC64C'}} type="wechat" /></div>
+								<div>微信版</div>
+								<div><img className="home-code" src={appCode} alt="" /></div>
+							</div>
+						</div>
 	  				</div>
 	  				<div>
 						<div className="home-block-title">邀请客户注册</div>
@@ -207,6 +237,28 @@ export default class Home extends Component{
 
 	  				<div>
 	  					<div className="home-block-title">业绩环比</div>
+	  					<div>
+	  						<div className="home-achievement">
+	  							<span>今日22单</span>
+	  							<span>￥45646.23</span>
+	  							<span>日环比订单量<Icon type="caret-up" style={{color: '#EE6158'}} />25%</span>
+	  						</div>
+	  						<div className="home-achievement">
+	  							<span>昨日22单</span>
+	  							<span>￥45646.23</span>
+	  							<span>订单金额<Icon type="caret-up" style={{color: '#EE6158'}} />25%</span>
+	  						</div>
+	  						<div className="home-achievement">
+	  							<span>本月522单</span>
+	  							<span>￥45646.23</span>
+	  							<span>月环比订单量<Icon type="caret-up" style={{color: '#EE6158'}} />25%</span>
+	  						</div>
+	  						<div className="home-achievement">
+	  							<span>上月622单</span>
+	  							<span>￥45646.23</span>
+	  							<span>日环比订单量<Icon type="caret-down" style={{color: '#51D35E'}} />25%</span>
+	  						</div>
+	  					</div>
 	  				</div>
 
 	  				<div>
