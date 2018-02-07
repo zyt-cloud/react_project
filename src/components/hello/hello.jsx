@@ -14,3 +14,4 @@ class Helloo extends Component {
 export const Hello = Helloo
 
 
+const test = '测试 vscode git'
