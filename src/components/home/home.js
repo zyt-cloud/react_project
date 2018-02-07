@@ -1,5 +1,7 @@
 import React, {Component} from 'react';
 
+import { connect } from "react-redux";
+
 import Chart from 'PAGES/common/chart'
 
 import copy from 'copy-to-clipboard'
@@ -9,6 +11,8 @@ import { Icon, Button, Alert, Input, message } from 'antd'
 import './home.css';
 
 import appCode from '../../assets/img/app_code.png'
+
+import axios from 'UTILS/http';
 
 const chartConfig = {
 	chart: {
@@ -97,9 +101,20 @@ const chartConfig = {
     }]
 }
 
-export default class Home extends Component{
+class Home extends Component{
 
-	
+	componentDidMount(){
+		axios.get('Api/v1/Home/ordersReport')
+
+		.then((res) => {
+			console.log(res)
+		}, this.onRejected).catch(error => {
+			this.onRejected(error)
+		})
+	}
+	onRejected = (data) => {
+		console.log(data)
+	}
 	render() {
 	  return (
 	  	<div className="dhb-home">
@@ -311,3 +326,7 @@ export default class Home extends Component{
 	  )
 	}
 }
+
+export default connect((state) => {
+	
+}, {})(Home)

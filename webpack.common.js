@@ -10,6 +10,15 @@ const extractLess = new ExtractTextPlugin("assets/css/less.[contenthash:6].css")
 const extractCss = new ExtractTextPlugin("assets/css/css.[contenthash:6].css");
 
 
+const DHB_API = process.env.npm_lifecycle_event === 'start' ? 'http://antdesign.newdhb.com/'
+	: process.env.npm_lifecycle_event === 'build' ? 'http://antdesign.newdhb.com/'
+		: 'https://antdesign.newdhb.com/'
+
+// iframe 地址
+const PRE_URL = process.env.npm_lifecycle_event === 'start' ? 'http://antdesign.newdhb.com/Manager/Home/index'
+	: process.env.npm_lifecycle_event === 'build' ? 'http://antdesign.newdhb.com/Manager/Home/index'
+		: 'http://antdesign.newdhb.com/Manager/Home/index'
+
 const fs = require('fs');
 
 const pkgPath = path.join(__dirname, 'package.json');
@@ -27,15 +36,6 @@ if (pkg.theme && typeof(pkg.theme) === 'string') {
 } else if (pkg.theme && typeof(pkg.theme) === 'object') {
     theme = pkg.theme;
 }
-
-const DHB_API = process.env.npm_lifecycle_event === 'start' ? 'http://api.newdhb.com/api.php' 
-              : process.env.npm_lifecycle_event === 'build' ? 'http://api.newdhb.com/api.php' 
-              : 'https://api.ymanager.com/api.php'
-
-// iframe 地址
-const PRE_URL = process.env.npm_lifecycle_event === 'start' ? 'http://antdesign.newdhb.com/Manager/Home/index'
-              : process.env.npm_lifecycle_event === 'build' ? 'http://antdesign.newdhb.com/Manager/Home/index'
-              : 'http://antdesign.newdhb.com/Manager/Home/index'
 
 module.exports = {
 	// entry: path.join(__dirname, 'src/index.js'),

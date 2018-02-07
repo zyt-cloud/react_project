@@ -226,7 +226,7 @@ export default class Header extends Component {
                     <span className="header-action"><Badge dot><Icon type="bell" /></Badge></span>
                     <span onClick={this.toggleHelp} className="header-action"><Icon type="question-circle-o" /></span>
                     <Dropdown overlay={myMenu(this)} placement="bottomRight">
-                        <span className="header-action"><Avatar size="small" style={{ backgroundColor: '#87d068' }} icon="user" /></span>
+                        <span className="header-action"><Avatar style={{ color: '#f56a00', backgroundColor: '#fde3cf' }}>D</Avatar></span>
                     </Dropdown>
                 </div>
             </div>
