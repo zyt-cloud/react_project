@@ -82,7 +82,7 @@ module.exports = {
 				]
 			})
 		},{
-			test: /\.js$/,
+			test: /\.(js|jsx)$/,
 			use: ['babel-loader?cacheDirectory=true'],
 			include: [path.join(__dirname, 'src')]
 		},{
@@ -122,8 +122,8 @@ module.exports = {
 			REDUX: path.join(__dirname, 'src/redux'),
 			UTILS: path.join(__dirname, 'src/utils'),
 		},
-		/*extensions: ['.jsx', '.js', '.json'],
-		mainFields: ['jsnext:main', 'main'] */
+		extensions: ['.jsx', '.js', '.json'],
+		/*mainFields: ['jsnext:main', 'main'] */
 	},
 
 	plugins: [

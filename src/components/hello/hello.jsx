@@ -7,8 +7,10 @@ class Helloo extends Component {
 	  console.log('did')
 	}
 	render(){
-		return <div>hello react{this.props.children}</div>
+		return <div>{this.props.children}</div>
 	}
 }
 
 export const Hello = Helloo
+
+
