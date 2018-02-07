@@ -12,32 +12,28 @@ import appCode from '../../assets/img/app_code.png'
 
 const chartConfig = {
 	chart: {
-		height: '352px',
         type: 'spline',
-        inverted: true
+        height: '352px'
     },
+    colors: ['#ff6645', '#0d233a', '#8bbc21', '#910000', '#1aadce', 
+   '#492970', '#f28f43', '#77a1e5', '#c42525', '#a6c96a'],
     credits: {
     	enabled: false
     },
     title: {
-        text: '大气温度和海拔高度关系'
+        text: null
     },
-    subtitle: {
-        text: '根据标准大气模型绘制'
+    /*subtitle: {
+        text: '数据来源: WorldClimate.com'
+    },*/
+    legend: {
+        align: 'center',
+        verticalAlign: 'top'
     },
     xAxis: {
-        reversed: false,
-        title: {
-            enabled: true,
-            text: '海拔高度'
-        },
-        labels: {
-            formatter: function () {
-                return this.value + 'km';
-            }
-        },
-        maxPadding: 0.05,
-        showLastLabel: true
+    	tickmarkPlacement: 'on',
+        categories: ['一月', '二月', '三月', '四月', '五月', '六月',
+                     '七月', '八月', '九月', '十月', '十一月', '十二月']
     },
     yAxis: {
         title: {
@@ -47,28 +43,57 @@ const chartConfig = {
             formatter: function () {
                 return this.value + '°';
             }
-        },
-        lineWidth: 2
-    },
-    legend: {
-        enabled: false
+        }
     },
     tooltip: {
-        headerFormat: '<b>{series.name}</b><br/>',
-        pointFormat: '{point.x} km: {point.y}°C'
+        useHTML: true,
+        backgroundColor: 'rgba(0,0,0,0.80)',
+        // padding: '13',
+        style: {
+        	color: '#fff',
+        	lineHeight: '24px',
+        	fontSize: '13px'
+        },
+        borderWidth: 0,
+        borderRadius: 4,
+        shared: true
     },
     plotOptions: {
         spline: {
             marker: {
-                enable: false
+            	enabled: true,
+                radius: 2,
+                lineWidth: 0,
+                symbol: 'circle'
             }
         }
     },
-    responsive: true,
     series: [{
-        name: '温度',
-        data: [[0, 15], [10, -50], [20, -56.5], [30, -46.5], [40, -22.1],
-               [50, -2.5], [60, -27.7], [70, -55.7], [80, -76.5]]
+        name: '东京',
+        marker: {
+        	enabled: false
+            // symbol: 'square'
+        },
+        data: [7.0, 6.9, 9.5, 14.5, 18.2, 21.5, 25.2, {
+            y: 26.5,
+            marker: {
+            	enabled: false
+                // symbol: 'url(https://www.highcharts.com/demo/gfx/sun.png)'
+            }
+        }, 23.3, 18.3, 13.9, 9.6]
+    }, {
+        name: '伦敦',
+        marker: {
+        	enabled: false
+            // symbol: 'diamond'
+        },
+        data: [{
+            y: 3.9,
+            marker: {
+            	enabled: false
+                // symbol: 'url(https://www.highcharts.com/demo/gfx/snow.png)'
+            }
+        }, 4.2, 5.7, 8.5, 11.9, 15.2, 17.0, 16.6, 14.2, 10.3, 6.6, 4.8]
     }]
 }
 

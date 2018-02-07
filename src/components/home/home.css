@@ -1,5 +1,5 @@
 .dhb-home{
-	margin: -14px -18px -28px;
+	margin: -14px -16px -28px;
 	color: #000;
 	background-color: #f0f0f0;
 }
@@ -46,6 +46,9 @@
 	background-color: #fff;
 	font-size: 0;
 }
+.home-right > div:last-child, .home-left > div:last-child{
+	margin-bottom: 0;
+}
 .home-nav-item, .home-preview{
 	display: inline-block;
 	height: 120px;
@@ -66,7 +69,7 @@
 	overflow: hidden;
 }
 .home-preview > div{
-	margin-top: 26px;
+	margin-top: 20px;
 }
 .home-nav-item:hover, .home-preview:hover{
 	box-shadow: 0 8px 10px 0 rgba(0,0,0,0.16);
@@ -89,10 +92,10 @@
 	margin-right: 10px;
 }
 .home-preview:nth-child(1) > .home-preview-icon{
-	background-position: -280px -150px;
+	background-position: -280px -144px;
 }
 .home-preview:nth-child(2) > .home-preview-icon{
-	background-position: -338px -146px;
+	background-position: -338px -142px;
 }
 .home-nav-item:nth-child(2) > .home-nav-icon{
 	background-position: -70px -142px;
@@ -105,13 +108,13 @@
 }
 .home-code{
 	width: 100px;
-	margin-top: 30px;
+	margin-top: 35px;
 }
 .home-preview:nth-child(2) > div:nth-child(2){
 	transition: all .6s;
 }
 .home-preview:nth-child(2):hover > div:nth-child(2){
-	transform: translate(0, -110px);
+	transform: translate(0, -108px);
 }
 .home-nav-title{
 	display: block;
@@ -137,6 +140,7 @@
 	float: right;
 }
 .dhb-notice{
+	height: 320px;
 	padding: 5px 0;
 	font-size: 13px;
 }
@@ -183,9 +187,7 @@
 .home-register > div{
 	margin-bottom: 20px;
 }
-/*.home-register > div:nth-chld(3){
-	margin-bottom: 0;
-}*/
+
 .home-register input{
 	width: 205px;
 	margin: 0 12px;
@@ -226,9 +228,16 @@
 .home-achievement > span{
 	display: block;
 }
-.home-achievement > span:nth-child(2){
+.home-achievement:nth-child(odd) > span:nth-child(2){
 	margin: 7px 0;
 	font-size: 32px;
+}
+.home-achievement:nth-child(even) > span:nth-child(2){
+	margin: 15.5px 0;
+	font-size: 20px;
+}
+.home-achievement:nth-child(3){
+	border-left: 1px solid #f0f0f0;
 }
 .home-achievement .anticon{
 	margin: 0 10px;
@@ -236,4 +245,8 @@
 
 .home-chart{
 	height: 352px;
+}
+
+.help-tab .ant-tabs-tab{
+	margin: 0 70px 0 0;
 }

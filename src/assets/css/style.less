@@ -47,6 +47,9 @@ a:link, a:visited{
 .color999{
 	color: #999;
 }
+.color000{
+	color: #000;
+}
 .theme-color{
 	color: @dhb-theme-color;
 }
@@ -56,7 +59,9 @@ a:link, a:visited{
 	white-space: nowrap;
 	text-overflow: ellipsis;
 }
-
+.ant-modal-title{
+	color: #000;
+}
 .dhb-link{
 	font-size: 13px;
 	color: @dhb-theme-color;
@@ -111,15 +116,48 @@ a:link, a:visited{
 	transition: opacity 0.15s;
 }
 .dhb-help{
+	overflow: auto;
 	position: absolute;
 	z-index: 10;
 	right: 0;
-	top: 56px;
+	top: 57px;
 	bottom: 0;
 	width: 194px;
+	padding: 20px;
+	color: #000;
 	background-color: #fff;
 	box-shadow: -2px 0 4px 0 rgba(0,0,0,0.10);
 	transition: right .3s cubic-bezier(.645,.045,.355,1);
+}
+.help-button{
+	width: 100%;
+}
+.help-title{
+	margin-bottom: 16px;
+	font-size: 13px;
+}
+.help-title > .anticon{
+	margin-right: 8px;
+	font-size: 16px;
+	vertical-align: text-bottom;
+}
+.help-link{
+	padding: 14.5px 0;
+	margin-bottom: 1px;
+	text-align: center;
+	color: #fff;
+	background: linear-gradient(to left, #78E486 0%, #51D35E 100%);
+	cursor: pointer;
+}
+.help-video{
+	margin-bottom: 20px;
+	background: linear-gradient(to left, #799AE6 0%, #5D7FDD 100%);
+}
+.help-divider{
+	margin-right: -20px;
+}
+.help-hot-line{
+	font-size: 18px;
 }
 .dhb-header{
 	z-index: 11;
@@ -308,7 +346,7 @@ a:link, a:visited{
 .menu-result-wrap{
 	z-index: 1001;
 	position: fixed;
-	bottom: 52px;
+	bottom: 44px;
 	width: 230px;
 	height: 500px;
 	padding: 14px 20px;
@@ -479,7 +517,7 @@ a:link, a:visited{
 	transition: all .3s cubic-bezier(.645,.045,.355,1);
 }
 .dhb-bread, .dhb-wrap{
-	padding: 14px 18px 0;
+	padding: 14px 16px 0;
     background-color: #fff;
 }
 .dhb-bread{

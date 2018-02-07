@@ -206,7 +206,12 @@ class Navbar extends React.Component {
 
     render() {
         const { menus } = this.props;
-        const { subs, searchMenus, searchText } = this.state;
+        let { subs, isAffix, searchMenus, searchText, menuIndex } = this.state;
+
+        if(isAffix && menus.length > 0 && subs.length === 0){
+          menuIndex = 0;
+          subs = menus[menuIndex].subs
+        }
 
         return (
           <div>
@@ -218,7 +223,7 @@ class Navbar extends React.Component {
                       onMouseEnter={this.switchSubMenu.bind(this, index)} 
                       onMouseLeave={this.switchSubMenu.bind(this, index)} 
                       key={item.rule_id} 
-                      className={`menu-item ${index === this.state.menuIndex ? 'active' : ''}`}>
+                      className={`menu-item ${index === menuIndex ? 'active' : ''}`}>
                         <span><i className={`menuicon ${item.iconType}`}></i>{item.name}</span>
                     </li>
                   ))}
@@ -256,10 +261,10 @@ class Navbar extends React.Component {
                 </ul>
               </div>
             </div>
-            <div onMouseEnter={this.enterSubMenu} onMouseLeave={this.enterSubMenu} className={`dhb-sub-menu ${this.state.showSub || this.state.isAffix ? '' : 'hide-submenu'}`}>
+            <div onMouseEnter={this.enterSubMenu} onMouseLeave={this.enterSubMenu} className={`dhb-sub-menu ${this.state.showSub || isAffix ? '' : 'hide-submenu'}`}>
               <div className="dhb-affix" onClick={this.toggleAffix}>
-                <div><Icon type={this.state.isAffix ? 'swap-left' : 'swap-right'} /></div>
-                {this.state.isAffix ? '收起' : '固定'}
+                <div><Icon type={isAffix ? 'swap-left' : 'swap-right'} /></div>
+                {isAffix ? '收起' : '固定'}
               </div>
               <ScrollBar>
                 <ul>
