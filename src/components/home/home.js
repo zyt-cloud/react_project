@@ -104,6 +104,7 @@ const chartConfig = {
 class Home extends Component{
 
 	componentDidMount(){
+		
 		axios.get('Api/v1/Home/ordersReport')
 
 		.then((res) => {
