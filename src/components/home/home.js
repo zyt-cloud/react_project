@@ -327,6 +327,6 @@ class Home extends Component{
 	}
 }
 
-export default connect((state) => {
-	
-}, {})(Home)
+export default connect((state) => ({
+
+}), {})(Home)

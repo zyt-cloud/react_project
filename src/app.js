@@ -136,8 +136,8 @@ export default class App extends Component {
 		console.log(error)
 	}
 	componentDidMount() {
-	  //?controller=OAuth2Menu&action=menu&company_id=311
-	  axios.get('api.php', {
+	  	//?controller=OAuth2Menu&action=menu&company_id=311
+		axios.get('Api/v1/OAuth2Menu/menu', {
 	  	params: {
 	  		controller: 'OAuth2Menu',
 	  		action: 'menu',
