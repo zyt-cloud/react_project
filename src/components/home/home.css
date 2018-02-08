@@ -12,6 +12,19 @@
 	margin-bottom: 16px;
 	background-color: #fff;
 }
+.home-header > div:nth-child(1) {
+	width: 88px;
+	height: 72px;
+}
+.home-header .ant-avatar {
+	width: 70px;
+	height: 70px;
+	
+	border-radius: 50%;
+}
+.home-header .ant-avatar-string {
+	line-height: 70px;
+}
 .hearder-account > div:nth-child(1){
 	font-size: 24px;
 	line-height: 33px;
@@ -22,7 +35,7 @@
 	vertical-align: middle;
 	line-height: 36px;
 }
-.home-header > div:nth-child(2){
+.home-header > div:nth-child(3){
 	width: 352px;
 }
 .home-header button, .home-header a{

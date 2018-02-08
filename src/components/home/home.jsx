@@ -6,7 +6,7 @@ import Chart from 'PAGES/common/chart'
 
 import copy from 'copy-to-clipboard'
 
-import { Icon, Button, Alert, Input, message } from 'antd'
+import { Icon, Button, Alert, Input, message, Avatar } from 'antd'
 
 import './home.css';
 
@@ -120,6 +120,7 @@ class Home extends Component{
 	  return (
 	  	<div className="dhb-home">
 	  		<div className="home-header">
+				<div><Avatar style={{ color: '#f56a00', backgroundColor: '#fde3cf' }}>D</Avatar></div>
 	  			<div>
 	  				<div className="hearder-account">
 		  				<div>成都阿商</div>

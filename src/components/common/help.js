@@ -58,8 +58,8 @@ export default class Help extends Component {
 		        </Modal>
 
 				<p className="help-title"><Icon type="question-circle-o" />帮助中心</p>
-				<div className="help-link" onClick={this.toggleModal}>新手帮助</div>
-				<div className="help-link help-video">视频学习</div>
+				<div className="help-link" onClick={this.toggleModal}><span className="help-icon"></span>新手帮助</div>
+				<div className="help-link help-video"><span className="help-icon help-icon-video"></span>视频学习</div>
 
 				<div><Button className="help-button">帮助中心</Button></div>
 				<div className="help-divider"><Divider /></div>

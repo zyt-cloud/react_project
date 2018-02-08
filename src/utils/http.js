@@ -3,7 +3,7 @@ import axios from 'axios';
 import qs from 'qs'
 
 const loginData = JSON.parse(window.localStorage.getItem('loginData') || '[]')
-const access_token = loginData.access_token || ''
+const access_token = loginData.access_token ? loginData.access_token.access_token : ''
 
 const instance = axios.create({
 	timeout: 10000,
@@ -23,7 +23,6 @@ const instance = axios.create({
 		// 'X-Requested-With': 'XMLHttpRequest'
 	},
 
-	transformRequest: [function (data, headers) {
 	transformRequest: [function (data, headers) {
 		console.log(headers)
     	return qs.stringify(data);
