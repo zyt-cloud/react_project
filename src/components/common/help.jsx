@@ -4,6 +4,8 @@ import { Icon, Divider, Button, Modal, Tabs, Carousel  } from 'antd'
 
 import appCode from '../../assets/img/app_code.png'
 
+import ScrollBar from 'PAGES/common/scroll_bar'
+
 const TabPane = Tabs.TabPane;
 
 /**
@@ -31,7 +33,7 @@ export default class Help extends Component {
 	render() {
 		return (
 			<div style={this.props.style} className="dhb-help">
-
+				<ScrollBar>
 				<Modal
 		          title="新手须知"
 		          visible={this.state.visible}
@@ -40,20 +42,44 @@ export default class Help extends Component {
 		          footer={null}
 		          onCancel={this.toggleModal}
 		        >
-		          <p className="color000" style={{fontSize: '30px',lineHeight: '40px'}}>订货宝针企业的不同职务人员，产品价值侧重点不同，一切源于您业务场景的需要</p>
+		          <p className="color000" style={{fontSize: '20px',lineHeight: '30px',marginBottom: '10px'}}>订货宝针企业的不同职务人员，产品价值侧重点不同，一切源于您业务场景的需要</p>
 		          <Tabs defaultActiveKey="1" onChange={this.callback} className="help-tab">
 				    <TabPane tab="老板和业务高管" key="1">
 						<Carousel autoplay>
-						    <div style={{height: '200px'}}><h3>1</h3></div>
-						    <div><h3>2</h3></div>
-						    <div><h3>3</h3></div>
-						    <div><h3>4</h3></div>
+						    <div><img src={require('../../assets/static/guide-01.jpg')} alt=""/></div>
+						    <div><img src={require('../../assets/static/guide-02.jpg')} alt=""/></div>
+						    <div><img src={require('../../assets/static/guide-03.jpg')} alt=""/></div>
+						    <div><img src={require('../../assets/static/guide-04.jpg')} alt=""/></div>
+							<div><img src={require('../../assets/static/guide-05.jpg')} alt=""/></div>
+						    <div><img src={require('../../assets/static/guide-06.jpg')} alt=""/></div>
 						</Carousel>
 				    </TabPane>
-				    <TabPane tab="业务员" key="2">Content of Tab Pane 2</TabPane>
-				    <TabPane tab="财务" key="3">Content of Tab Pane 3</TabPane>
-				    <TabPane tab="下游订货商" key="4">Content of Tab Pane 4</TabPane>
-				    <TabPane tab="技术与规格" key="5">Content of Tab Pane 5</TabPane>
+				    <TabPane tab="业务员" key="2">
+						<Carousel autoplay>
+						    <div><img src={require('../../assets/static/guide-07.jpg')} alt=""/></div>
+						    <div><img src={require('../../assets/static/guide-08.jpg')} alt=""/></div>
+						    <div><img src={require('../../assets/static/guide-09.jpg')} alt=""/></div>
+						    <div><img src={require('../../assets/static/guide-10.jpg')} alt=""/></div>
+						</Carousel>
+					</TabPane>
+				    <TabPane tab="财务" key="3">
+						<Carousel autoplay>
+						    <div><img src={require('../../assets/static/guide-11.jpg')} alt=""/></div>
+						    <div><img src={require('../../assets/static/guide-12.jpg')} alt=""/></div>
+						</Carousel>
+					</TabPane>
+				    <TabPane tab="下游订货商" key="4">
+						<Carousel autoplay>
+						    <div><img src={require('../../assets/static/guide-13.jpg')} alt=""/></div>
+						    <div><img src={require('../../assets/static/guide-14.jpg')} alt=""/></div>
+						</Carousel>
+					</TabPane>
+				    <TabPane tab="技术与规格" key="5">
+						<Carousel autoplay>
+						    <div><img src={require('../../assets/static/guide-15.jpg')} alt=""/></div>
+						    <div><img src={require('../../assets/static/guide-16.jpg')} alt=""/></div>
+						</Carousel>
+					</TabPane>
 				  </Tabs>
 		        </Modal>
 
@@ -85,7 +111,7 @@ export default class Help extends Component {
 
 				<div className="help-title"><Icon type="global" />订货宝官网</div>
 				<div><Button className="help-button" href="https://www.dhb168.com" target="_blank">立即访问</Button></div>
-				
+				</ScrollBar>
 			</div>
 		);
 	}

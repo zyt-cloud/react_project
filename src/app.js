@@ -103,27 +103,27 @@ export default class App extends Component {
 	}
 	onResolve = (res) => {
 
-		const menuRoute = this.initMenus(res.data.data);
+		const menuRoute = this.initMenus(res.data);
 
 		const initEl = document.getElementById('init-sys')
 
-		res.data.data[0].subs.push({
+		res.data[0].subs.push({
 			name: '关于',
 			path: '/Manager/about',
 			url: '/Manager/about'
 		})
-		res.data.data[1].subs.push({
+		res.data[1].subs.push({
 			name: '计数',
 			path: '/Manager/counter/zhangsan',
 			url: '/Manager/counter/zhangsan'
 		})
-		res.data.data[2].subs.push({
+		res.data[2].subs.push({
 			name: '用户',
 			path: '/Manager/user',
 			url: '/Manager/user'
 		})
 		this.setState({
-			menus: res.data.data,
+			menus: res.data,
 			menuRoute
 		})
 
@@ -137,13 +137,13 @@ export default class App extends Component {
 	}
 	componentDidMount() {
 	  	//?controller=OAuth2Menu&action=menu&company_id=311
-		axios.get('Api/v1/OAuth2Menu/menu', /*{
+		axios.get('Api/v1/OAuth2Menu/menu'/*, {
 	  	params: {
 	  		controller: 'OAuth2Menu',
 	  		action: 'menu',
 	  		company_id: '311'
-		}*/
-	  })
+		}
+	  }*/)
 	  /*axios.post('', {
   		controller: 'OAuth2Menu',
   		action: 'menu',
