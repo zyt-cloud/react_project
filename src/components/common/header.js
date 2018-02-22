@@ -37,8 +37,8 @@ const myMenu = (context) => (
     </Menu>
 )
 
-const helpMenu = (context) => (
-    <Menu style={{width: '140px'}}>
+const message = (context) => (
+    <Menu style={{width: '280px'}}>
         <Menu.Item key="1">
           <div className="action-item"><Icon type="user" />我的账号</div>
         </Menu.Item>
@@ -223,7 +223,9 @@ export default class Header extends Component {
                     <Dropdown overlay={refreshMenu(this)}>
                         <span className="header-action" onClick={this.refreshTab}><Icon type="reload" /></span>
                     </Dropdown>
-                    <span className="header-action"><Badge dot><Icon type="bell" /></Badge></span>
+                    <Dropdown overlay={message(this)} placement="bottomCenter">
+                        <span className="header-action"><Badge dot><Icon type="bell" /></Badge></span>
+                    </Dropdown>
                     <span onClick={this.toggleHelp} className="header-action"><Icon type="question-circle-o" /></span>
                     <Dropdown overlay={myMenu(this)} placement="bottomRight">
                         <span className="header-action"><Avatar style={{ color: '#f56a00', backgroundColor: '#fde3cf' }}>D</Avatar></span>

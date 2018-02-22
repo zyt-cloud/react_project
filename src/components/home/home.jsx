@@ -245,28 +245,28 @@ class Home extends Component{
 							<div className="home-nav-icon"></div>
 							<div>
 								<span className="home-nav-title">订单红包</span>
-								<span>营销提升下单率</span>
+								<span className="hidden-xs">营销提升下单率</span>
 							</div>
 						</Link>
 						<Link to="/Manager/Client/usage" className="home-nav-item clearfix">
 							<div className="home-nav-icon"></div>
 							<div>
 								<span className="home-nav-title">客户使用分析</span>
-								<span>辨识高价值客户</span>
+								<span className="hidden-xs">辨识高价值客户</span>
 							</div>
 						</Link>
 						<Link to="/Manager/BiGoodsSearch/index" className="home-nav-item clearfix">
 							<div className="home-nav-icon"></div>
 							<div>
 								<span className="home-nav-title">搜索指数</span>
-								<span>大家都在找哪些商品</span>
+								<span className="hidden-xs">大家都在找哪些商品</span>
 							</div>
 						</Link>
 						<div className="home-nav-item clearfix">
 							<div className="home-nav-icon"></div>
 							<div>
 								<span className="home-nav-title">招商加盟</span>
-								<span>一键邀请开通系统</span>
+								<span className="hidden-xs">一键邀请开通系统</span>
 							</div>
 						</div>
 					</div>
