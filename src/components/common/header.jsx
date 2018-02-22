@@ -1,5 +1,7 @@
 import React, { Component } from 'react';
 
+import { Link } from 'react-router-dom'
+
 import { Tag, Icon, Button, Dropdown, Menu, Avatar, Badge } from 'antd';
 
 import { triggerRefresh } from 'UTILS/utils';
@@ -40,14 +42,35 @@ const myMenu = (context) => (
 const message = (context) => (
     <Menu style={{width: '280px'}}>
         <Menu.Item key="1">
-          <div className="action-item"><Icon type="user" />我的账号</div>
+          <div className="action-item">
+            <i className="header-msg-icon"></i>
+            <div>
+                <div>你收到一条站内消息</div>
+                <div className="header-time">5天前</div>
+            </div>
+          </div>
         </Menu.Item>
         <Menu.Item key="2">
-          <div className="action-item"><Icon type="lock" />修改密码</div>
+          <div className="action-item order-msg">
+            <i className="header-msg-icon"></i>
+            <div>
+                <div>你收到一条订单消息</div>
+                <div className="header-time">5天前</div>
+            </div>
+          </div>
+        </Menu.Item>
+        <Menu.Item key="3">
+          <div className="action-item words-msg">
+            <i className="header-msg-icon"></i>
+            <div>
+                <div>你收到一条留言咨询</div>
+                <div className="header-time">5天前</div>
+            </div>
+          </div>
         </Menu.Item>
         <Menu.Divider />
-        <Menu.Item key="3">
-          <div className="action-item"><Icon type="logout" />退出登录</div>
+        <Menu.Item key="4">
+          <div className="action-item"><Link to="/Manager/RedPacket/top" className="go-msg-center">进入消息中心</Link></div>
         </Menu.Item>
     </Menu>
 )

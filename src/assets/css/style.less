@@ -14,10 +14,10 @@ a:link, a:visited{
 	text-decoration: none;
 }
 
-::-webkit-scrollbar-thumb {outline-offset: -2px;outline: 2px solid #fff;-webkit-border-radius: 0px;border: 2px solid #fff;background-color: #bbd;}
-::-webkit-scrollbar-thumb:hover {background-color: #50506d; -webkit-border-radius: 4px; }
+::-webkit-scrollbar-thumb {outline-offset: -2px;outline: 2px solid #fff;border-radius: 0px;border: 2px solid #fff;background-color: #bbd;}
+::-webkit-scrollbar-thumb:hover {background-color: #50506d; border-radius: 4px; }
 ::-webkit-scrollbar {width: 8px;height: 8px;}
-::-webkit-scrollbar-track-piece { background-color: #fff; -webkit-border-radius: 0; }
+::-webkit-scrollbar-track-piece { background-color: #fff; border-radius: 0; }
 
 // antd 样式覆盖
 .ant-dropdown-menu-item:hover, .ant-dropdown-menu-submenu-title:hover {
@@ -211,6 +211,32 @@ a:link, a:visited{
 }
 .header-action:hover{
 	background-color: #FFEEEA;
+}
+.header-msg-icon{
+	float: left;
+	width: 30px;
+	height: 30px;
+	margin: 14px 0 0 3px;
+	background: url(../img/icon.png) no-repeat -76px -89px;
+}
+.order-msg>.header-msg-icon{
+	background-position: -116px -89px;
+}
+.words-msg>.header-msg-icon{
+	background-position: -156px -89px;
+}
+.go-msg-center{
+	display: block;
+	text-align: center;
+	padding: 5px;
+}
+.header-msg-icon + div{
+	margin: 9px 0 9px 50px;
+}
+.header-time{
+	color: #000;
+	opacity: 0.25;
+	font-size: 12px;
 }
 .tab-item{
 	position: relative;
