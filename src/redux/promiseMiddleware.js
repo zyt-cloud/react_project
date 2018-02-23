@@ -29,7 +29,7 @@ export default  store => next => action => {
     const onResolve = res => {
         next({
             ...rest,
-            data: res.data,
+            data: res,
             type: SUCCESS
         });
         if (afterSuccess) {

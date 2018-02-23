@@ -10,6 +10,8 @@ import copy from 'copy-to-clipboard'
 
 import { Icon, Button, Alert, Input, message, Avatar } from 'antd'
 
+import { setRefresh, removeRefresh } from 'UTILS/utils';
+
 import './home.css';
 
 import axios from 'UTILS/http';
@@ -87,13 +89,40 @@ const chartConfig = {
     }]
 }
 
-let orderData2 = null
+let _orderData = null, _homeData = null;
 
 class Home extends Component{
 
 	state = {
-		homeData: null
+		homeData: _homeData,
+		orderData: _orderData
 	}
+	 // 系统提醒
+	static NOTICE = {
+		mail: {},
+		// 即将过期提醒
+		imminent_expiry: {
+			text: '您的系统使用期限即将到期，请尽快续费购买，以免影响您的正常使用！',
+			url: '/Manager/Buy/index'
+		},
+		// 已经过期提醒
+		already_expiry: {
+			text: '您的系统使用期限已经到期，请尽快续费购买，以免影响您的正常使用！',
+			url: '/Manager/Buy/index'
+		},
+		// 短信用光提醒
+		sms_number_out: {
+			text: '您的短信余额不足',
+			btnText: '立即充值',
+			url: '/Manager/Buy/services'
+		},
+		// 营业执照提醒
+		business_license: {
+			text: '上传营业执照等，审核通过后成为正式用户，开启全部功能权限',
+			btnText: '立即上传',
+			url: '/Manager/System/credentials'
+		}
+	};
 
 	setChart(orderData){
 		const { series } = chartConfig;
@@ -109,20 +138,53 @@ class Home extends Component{
 			series[1].data.push(item.amounts)
 			chartConfig.xAxis.categories.push(item.name)
 		})
+	}
+	getAlert(){
+		const { notice } = this.state.homeData.company_info
+		let noticeObj = null;
+		for (let k of Object.keys(notice)) {
+			if(notice[k] === 'T'){
+				noticeObj = Home.NOTICE[k]
+				break;
+			}
+		}
+		if(!noticeObj){
+			return
+		}
 
-		console.log(chartConfig)
+		return (
+			<div className="home-alert">
+				<Icon type="exclamation-circle" />{noticeObj.text}<span data-to={noticeObj.url} onClick={this.noticeJump} className="pull-right">{noticeObj.btnText || '续费购买'}</span>
+			</div>
+		)
+	}
+	noticeJump = (e) => {
+		console.log(e.target.dataset)
 	}
 
 	componentDidMount(){
+		setRefresh(() => {
+			//homeData = orderData = null;
+			this.getHomeData();
+			this.getOrdersReport()
+		});
+
+		if(_homeData && _orderData){
+			return;
+		}
+		
 		this.getHomeData();
 		this.getOrdersReport()
+	}
+	componentWillUnmount() {
+		removeRefresh();
 	}
 	getHomeData(){
 		axios.get('Api/v1/Home/home')
 		.then((res) => {
 			console.log('homedata', res)
 			if(res.status === 'T'){
-				this.setState({homeData: res.data})
+				this.setState({homeData: (_homeData = res.data)})
 			}
 			else{
 
@@ -135,9 +197,8 @@ class Home extends Component{
 	getOrdersReport(){
 		axios.get('Api/v1/Home/ordersReport')
 		.then((res) => {
-			console.log(res)
 			if (res.status === 'T') {
-				this.setState({ orderData: (orderData2 = res.data) })
+				this.setState({ orderData: (_orderData = res.data) })
 			}
 			else {
 
@@ -157,6 +218,7 @@ class Home extends Component{
 	  this.setChart(orderData);
 	  return (
 	  	<div className="dhb-home">
+		  	{this.getAlert()}
 	  		<div className="home-header">
 				<div><Avatar style={{ color: '#f56a00', backgroundColor: '#fde3cf' }}>D</Avatar></div>
 	  			<div>
@@ -167,7 +229,7 @@ class Home extends Component{
 	  			</div>
 	  			<div>
 	  				<div>当前版本：{homeData.company_info.version_name} <Button size="small">特性</Button><Button size="small" value="default">升级</Button></div>
-	  				<div>剩余短信：{homeData.company_info.sms_number} 条<span><Icon type="exclamation-circle" />短信余额不足</span><Button size="small" type="primary">充值</Button></div>
+	  				<div>剩余短信：{homeData.company_info.sms_number} 条{homeData.company_info.sms_number > 0 ? '' : <span><Icon type="exclamation-circle" />短信余额不足</span>}<Button size="small" type="primary">充值</Button></div>
 	  			</div>
 	  		</div>
 	  		<div className="home-main clearfix">
