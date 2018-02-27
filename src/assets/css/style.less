@@ -59,6 +59,12 @@ a:link, a:visited{
 	white-space: nowrap;
 	text-overflow: ellipsis;
 }
+.padding-normal{
+	padding: 16px;
+}
+.pointer{
+	cursor: pointer;
+}
 .ant-modal-title{
 	color: #000;
 }
@@ -554,11 +560,32 @@ a:link, a:visited{
 	transition: all .3s cubic-bezier(.645,.045,.355,1);
 }
 .dhb-bread, .dhb-wrap{
-	padding: 14px 16px 0;
     background-color: #fff;
 }
 .dhb-bread{
-	margin-bottom: 19px;
+	padding: 14px 16px;
+	border-bottom: 1px solid #f0f0f0;
+}
+.dhb-bread-title{
+	display: inline-block;
+	font-size: 24px;
+	color: #000;
+	vertical-align: sub;
+}
+.dhb-bread-title + .anticon{
+	margin: 0 16px 0 10px;
+	font-size: 16px;
+	cursor: pointer;
+}
+.filter-actions > button{
+	margin-right: 8px;
+}
+.filter-expand{
+	margin-left: 20px;
+	color: #4A90E2;
+}
+.filter-wrap .ant-select{
+	width: 100%;
 }
 
 .table-resize-proxy {

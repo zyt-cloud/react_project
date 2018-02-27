@@ -7,19 +7,17 @@ import Index from 'PAGES/index/index'
 
 import { Route, Switch, NavLink } from 'react-router-dom'
 
-import { Breadcrumb, Spin, Icon } from 'antd';
-
 import { addTab } from 'REDUX/actions/index'
 
 
 
 import Home from 'PAGES/home/home';
 
-import About from 'PAGES/about/about';
 import Counter from 'PAGES/counter/counter';
 import PreVersion from 'PAGES/preversion/preversion';
 // lazy load
 import User from 'bundle-loader?lazy&name=user!PAGES/user/user';
+import Purchase from 'bundle-loader?lazy&name=purchase!PAGES/purchase/index'
 
 import { loadComponent, AuthRoute } from 'UTILS/utils'
 
@@ -39,7 +37,7 @@ export default class App extends Component {
 		preUrl: PRE_URL,
 		menus: [],
 		menuRoute: [],
-		localMenus: ['/Manager/about', '/Manager/home', '/Manager/counter/zhangsan', '/Manager/user']
+		localMenus: ['/Manager/Purchase/lists', '/Manager/home', '/Manager/counter/zhangsan', '/Manager/user']
 	  }
 	}
 
@@ -107,11 +105,6 @@ export default class App extends Component {
 
 		const initEl = document.getElementById('init-sys')
 
-		res.data[0].subs.push({
-			name: '关于',
-			path: '/Manager/about',
-			url: '/Manager/about'
-		})
 		res.data[1].subs.push({
 			name: '计数',
 			path: '/Manager/counter/zhangsan',
@@ -199,7 +192,6 @@ export default class App extends Component {
     	let {menus, menuRoute, localMenus, showHelp, preUrl,  _right = 0 } = this.state;
     	menuRoute = menuRoute.filter(item => localMenus.findIndex(localItem => localItem === item.path) === -1);
 
-    	const antIcon = <Icon type="loading" style={{ fontSize: 24 }} spin />;
     	const _windowWidth = window.innerWidth;
     	if(_windowWidth >= 1600 && showHelp){
     		_right = '194px';
@@ -211,22 +203,14 @@ export default class App extends Component {
             	<Index history={history} toggleAffix={this.toggleAffix} menus={menus} showHelp={showHelp} />
 
             	<div id="dhb-content" className="dhb-content" style={{left: this.state.isAffix ? '230px' : '110px', right: _right}}>
-            		<div className="dhb-bread hide">
-            		  <Breadcrumb>
-					    <Breadcrumb.Item><NavLink to="/Manager/Home/index">首页</NavLink></Breadcrumb.Item>
-					    <Breadcrumb.Item><a href="javascript:;">订单</a></Breadcrumb.Item>
-					    <Breadcrumb.Item>订单管理</Breadcrumb.Item>
-					  </Breadcrumb>
-  					</div>
   					<div id="pre-version" style={{display: 'none'}}><iframe src={preUrl} frameBorder="0"></iframe></div>
   					<div className="dhb-wrap">
 						<Switch>
 							<AuthRoute name="首页" exact path="/" component={Home} />
 							<AuthRoute name="首页" exact path="/Manager/home" component={Home}/>
-							<AuthRoute name="首页" path="/Manager/Home/index" component={PreVersion}/>
-			                <AuthRoute name="关于" path="/Manager/about" component={About}/>
 			                <AuthRoute name="计数" path="/Manager/counter/:name" component={Counter}/>
 			                <AuthRoute name="用户" path="/Manager/user" component={User.mod || loadComponent(User)}/>
+							<AuthRoute name="采购订单" path="/Manager/purchase/lists" component={Purchase.mod || loadComponent(Purchase)}/>
 			                {
 			                	menuRoute.map((item, index) => (
 			                		<AuthRoute key={item.path} name={item.name} path={item.path} component={PreVersion}/>

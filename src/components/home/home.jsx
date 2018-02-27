@@ -10,6 +10,8 @@ import copy from 'copy-to-clipboard'
 
 import { Icon, Button, Alert, Input, message, Avatar } from 'antd'
 
+import HomeDialog from './dialog'
+
 import { setRefresh, removeRefresh } from 'UTILS/utils';
 
 import './home.css';
@@ -219,6 +221,7 @@ class Home extends Component{
 	  return (
 	  	<div className="dhb-home">
 		  	{this.getAlert()}
+			<HomeDialog dialog={homeData.dialog} />
 	  		<div className="home-header">
 				<div><Avatar style={{ color: '#f56a00', backgroundColor: '#fde3cf' }}>D</Avatar></div>
 	  			<div>
